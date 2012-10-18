@@ -57,7 +57,11 @@ RETVAL=0
 
 case "$1" in
   start)
-    start
+    status -p $PIDFILE >/dev/null
+    RET=$?
+    if [ $RET -ne 0 ];then
+      start
+    fi
     ;;
   stop)
     stop
