@@ -47,6 +47,7 @@ start()
   daemon --user $MONGO_USER $mongod $OPTIONS
   RETVAL=$?
   echo
+  [ $RETVAL -eq 0 ] && touch /var/lock/subsys/mongod_<%= mongod_instance %>
 }
 
 stop()
@@ -56,6 +57,7 @@ stop()
   RETVAL=$?
   rm "$PIDFILE"
   echo
+  [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mongod_<%= mongod_instance %>
 }
 
 restart () {
@@ -80,12 +82,15 @@ case "$1" in
   restart|reload|force-reload)
     restart
     ;;
+  condrestart)
+    [ -f /var/lock/subsys/mongod_<%= mongod_instance %> ] && restart || :
+    ;;
   status)
     status -p $PIDFILE
     RETVAL=$?
     ;;
   *)
-    echo "Usage: $0 {start|stop|status|restart|reload|force-reload}"
+    echo "Usage: $0 {start|stop|status|restart|reload|force-reload|condrestart}"
     RETVAL=1
 esac
 
