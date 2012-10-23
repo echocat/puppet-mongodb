@@ -14,6 +14,7 @@
 	sharedscripts
 	postrotate
 		killall -SIGUSR1 mongod
+		killall -SIGUSR1 mongos
 		find <%= scope.lookupvar('mongodb::params::logdir') %> -type f -regex ".*\.\(log.[0-9].*-[0-9].*\)" -exec rm {} \;
 	endscript
 }
