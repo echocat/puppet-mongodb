@@ -14,7 +14,7 @@ You have to change that in params.pp and install.pp or remove the repo part from
 have other ways to get the mongodb repo into your server.
 
 # Parameters:
-  Starting mongod
+### Starting mongod
 
    mongod_instance = despription of mongd service (shard1, config, etc)  (required)  
    mongod_bind_ip = listen ip (defaul; emtpy, so listen in all)  
@@ -29,7 +29,7 @@ have other ways to get the mongodb repo into your server.
    mongod_fork = Enable/Disable fork of mongod process (default: true)  
    mongod_add_options = Array. Each field is "key" or "key=value" for parameters for config file  
 
-  Starting mongos (mongo loadbalancer)
+### Starting mongos (mongo loadbalancer)
 
    mongos_instance = despription of mongd service (shard1, config, etc)  (required)  
    mongos_bind_ip = listen ip (defaul; emtpy, so listen in all)  
