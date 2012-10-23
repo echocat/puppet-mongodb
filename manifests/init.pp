@@ -38,6 +38,17 @@ class mongodb inherits mongodb::params {
 			before => Anchor['mongodb::end'],
 	}
 
+	# remove not wanted startup script, because it would kill all mongod instances
+	# and not only the default mongod
+
+	file {
+		"/etc/init.d/mongod":
+			ensure => absent,
+			require => Service["mongod"],
+			before => Anchor['mongodb::end'],
+	}
+
+
 	define mongod (
 		$mongod_instance = $name,
 		$mongod_bind_ip = '',
