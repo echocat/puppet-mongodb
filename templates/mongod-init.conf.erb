@@ -29,7 +29,15 @@ mongod=${MONGOD-/usr/bin/mongod}
 MONGO_USER=<%= scope.lookupvar('mongodb::params::run_as_user') %>
 MONGO_GROUP=<%= scope.lookupvar('mongodb::params::run_as_group') %>
 
-
+# Handle NUMA access to CPUs (SERVER-3574)
+# This verifies the existence of numactl as well as testing that the command works
+NUMACTL_ARGS="--interleave=all"
+if which numactl >/dev/null 2>/dev/null && numactl $NUMACTL_ARGS ls / >/dev/null 2>/dev/null
+then
+    NUMACTL="numactl $NUMACTL_ARGS"
+else
+    NUMACTL=""
+fi
 
 start()
 {
