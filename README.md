@@ -1,17 +1,23 @@
 # MongoDB module
 
-written by Daniel Werdermann <dwerdermann@web.de>
+This module manages mongodb services. It provides the functions for mongod and mongos instances.
 
-This module manages mongodb services.
-It provides the functions for mongod and mongos instances.
+# Works for
+
+RHEL/CentOS 6+  
+Debian 6+  
+Ubuntu 10.04 and newer
 
 # Requirements
 
-You need a class which installes the mongodb repository.
-Here it is yum::repo::mongodb based on the yum module of http://www.example42.com.
-For redhat the repo is http://downloads-distro.mongodb.org/repo/redhat/os/x86_64
+You need a class which installes the mongodb repository.  
 You have to change that in params.pp and install.pp or remove the repo part from install.pp if you
 have other ways to get the mongodb repo into your server.
+
+For Redhat/CentOS I use the yum module by http://www.example42.com. (and created my own yum::repo::mongodb)
+The repo for Redhat is http://downloads-distro.mongodb.org/repo/redhat/os/x86_64 .  
+All information about how to configure the mongodb repo of your OS can be found here:  
+http://docs.mongodb.org/manual/installation/
 
 # Parameters:
 ### Starting mongod
@@ -97,3 +103,9 @@ have other ways to get the mongodb repo into your server.
 
 	node "mongo4.my.domain" inherits mongo_sharding_default { }
 </pre>
+
+
+# Author
+
+written by Daniel Werdermann <dwerdermann@web.de>
+
