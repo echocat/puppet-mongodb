@@ -13,9 +13,13 @@ rest=<%= mongod_rest %>
 
 fork=<%= mongod_fork %>
 
+<% if mongod_shardsvr != "false" -%>
 shardsvr=<%= mongod_shardsvr %>
+<% end %>
 
+<% if mongod_configsvr != "false" -%>
 configsvr=<%= mongod_configsvr %>
+<% end %>
 
 <% if mongod_bind_ip != "" -%>
 bind_ip=<%= mongod_bind_ip %>
