@@ -15,14 +15,10 @@ class mongodb::logrotate {
 		}
 	}
 
-	File {
-		require => [Class['mongodb::install'],Class['mongodb::params']]
-	}
-
 	file {
 		'/etc/logrotate.d/mongodb':
 			content => template('mongodb/logrotate.conf.erb'),
-			require => Package['logrotate'],
+			require => [Package['logrotate'],Class['mongodb::install'],Class['mongodb::params']]
 			before => Anchor['mongodb::logrotate::end']
 	}
 }

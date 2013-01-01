@@ -22,10 +22,6 @@ class mongodb inherits mongodb::params {
 		}
 	}
 
-	File {
-		require => Anchor['mongodb::install::end'],
-	}
-
 	# stop and disable default mongod
 
 	service {
