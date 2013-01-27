@@ -13,12 +13,12 @@ class mongodb inherits mongodb::params {
 		before => Anchor['mongodb::end'],
 	}
 
-	case $operatingsystem {
+	case $::operatingsystem {
 		/(?i)(Debian|Ubuntu|RedHat|CentOS)/: {
 			class { 'mongodb::install': }
 		}
 		default: {
-			fail "Unsupported OS ${operatingsystem} in 'mongodb' module"
+			fail "Unsupported OS ${::operatingsystem} in 'mongodb' module"
 		}
 	}
 
