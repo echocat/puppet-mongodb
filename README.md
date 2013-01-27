@@ -10,14 +10,22 @@ Ubuntu 10.04 and newer
 
 # Requirements
 
-You need a class which installes the mongodb repository.  
+If you use Debian/Ubuntu you need a class which installes the mongodb repository.  
 You have to change that in params.pp and install.pp or remove the repo part from install.pp if you
-have other ways to get the mongodb repo into your server.
+have other ways to get the mongodb repo into your server.  
 
-For Redhat/CentOS I use the yum module by http://www.example42.com. (and created my own yum::repo::mongodb)
-The repo for Redhat is http://downloads-distro.mongodb.org/repo/redhat/os/x86_64 .  
+For Redhat/CentOS there is an yum repo defined in /repos/yum.pp, which will be used as default.  
+
 All information about how to configure the mongodb repo of your OS can be found here:  
-http://docs.mongodb.org/manual/installation/
+http://docs.mongodb.org/manual/installation/  
+
+### Modules needed:  
+
+stdlib by puppetlabs  
+
+### Software versions needed:  
+facter > 1.6.2  
+puppet > 2.6.2  
 
 # Parameters:
 ### Starting mongod
