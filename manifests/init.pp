@@ -1,4 +1,4 @@
-# Class: mongodb
+# == Class: mongodb
 
 class mongodb inherits mongodb::params {
 

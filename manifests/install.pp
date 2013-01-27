@@ -1,4 +1,4 @@
-# Class: mongodb::install
+# == Class: mongodb::install
 #
 #
 class mongodb::install {

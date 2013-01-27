@@ -1,10 +1,10 @@
-# Class: mongodb::params
+# == Class: mongodb::params
 #
 #
 class mongodb::params {
 
 	$repo_class = $operatingsystem ? {
-		/(?i)(Redhat|CentOS)/ => 'yum::repo::mongodb',
+		/(?i)(Redhat|CentOS)/ => 'mongodb::repos::yum',
 	}
 
 	$server_pkg_name = $operatingsystem ? {
