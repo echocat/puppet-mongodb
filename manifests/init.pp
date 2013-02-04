@@ -67,7 +67,10 @@ class mongodb inherits mongodb::params {
 				#	notify  => Class['mongodb::service'],
 				require => Class['mongodb::install'];
 			"/etc/init.d/mongod_${mongod_instance}":
-				content => template('mongodb/mongod-init.conf.erb'),
+				content => $::osfamily {
+					debian => template('mongodb/debian_mongod-init.conf.erb'),
+					redhat => template('mongodb/redhat_mongod-init.conf.erb'),
+				},
 				mode    => '0755',
 				require => Class['mongodb::install'],
 		}
@@ -104,7 +107,10 @@ class mongodb inherits mongodb::params {
 				#	notify  => Class['mongodb::service'],
 				require => Class['mongodb::install'];
 			"/etc/init.d/mongos_${mongos_instance}":
-				content => template('mongodb/mongos-init.conf.erb'),
+				content => $::osfamily {
+					debian => template('mongodb/debian_mongos-init.conf.erb'),
+					redhat => template('mongodb/redhat_mongos-init.conf.erb'),
+				},
 				mode    => '0755',
 				require => Class['mongodb::install'],
 		}
