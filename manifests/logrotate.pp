@@ -18,7 +18,11 @@ class mongodb::logrotate {
 	file {
 		'/etc/logrotate.d/mongodb':
 			content => template('mongodb/logrotate.conf.erb'),
-			require => [Package['logrotate'],Class['mongodb::install'],Class['mongodb::params']],
+			require => [
+				Package['logrotate'],
+				Class['mongodb::install'],
+				Class['mongodb::params']
+			],
 			before => Anchor['mongodb::logrotate::end']
 	}
 }

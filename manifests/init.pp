@@ -13,8 +13,8 @@ class mongodb inherits mongodb::params {
 		before => Anchor['mongodb::end'],
 	}
 
-	case $::operatingsystem {
-		/(?i)(Debian|Ubuntu|RedHat|CentOS)/: {
+	case $::osfamily {
+		/(?i)(Debian|RedHat)/: {
 			class { 'mongodb::install': }
 		}
 		default: {
@@ -25,7 +25,7 @@ class mongodb inherits mongodb::params {
 	# stop and disable default mongod
 
 	service {
-		"mongod":
+		"${::mongodb::params::old_servicename}":
 			ensure => stopped,
 			enable => false,
 			hasstatus => true,
@@ -38,9 +38,9 @@ class mongodb inherits mongodb::params {
 	# and not only the default mongod
 
 	file {
-		"/etc/init.d/mongod":
+		"/etc/init.d/${::mongodb::params::old_servicename}":
 			ensure => absent,
-			require => Service["mongod"],
+			require => Service["${::mongodb::params::old_servicename}"],
 			before => Anchor['mongodb::end'],
 	}
 
@@ -77,7 +77,10 @@ class mongodb inherits mongodb::params {
 			ensure     => $mongod_running,
 			hasstatus  => true,
 			hasrestart => true,
-			require    => [File["/etc/init.d/mongod_${mongod_instance}"],Service['mongod']],
+			require    => [
+				File["/etc/init.d/mongod_${mongod_instance}"],
+				Service["${::mongodb::params::old_servicename}"]
+			],
 			before     => Anchor['mongodb::end']
 		}
 	}
@@ -111,7 +114,10 @@ class mongodb inherits mongodb::params {
 			ensure     => $mongos_running,
 			hasstatus  => true,
 			hasrestart => true,
-			require    => [File["/etc/init.d/mongos_${mongos_instance}"],Service['mongod']],
+			require    => [
+				File["/etc/init.d/mongos_${mongos_instance}"],
+				Service["${::mongodb::params::old_servicename}"]
+			],
 			before     => Anchor['mongodb::end']
 		}
 	}

@@ -3,24 +3,34 @@
 #
 class mongodb::params {
 
-	$repo_class = $operatingsystem ? {
-		/(?i)(Redhat|CentOS)/ => 'mongodb::repos::yum',
+	$repo_class = $::osfamily ? {
+		redhat => 'mongodb::repos::yum',
 	}
 
-	$server_pkg_name = $operatingsystem ? {
-		/(?i)(Debian|Ubuntu)/ => 'mongodb-10gen',
-		/(?i)(Redhat|CentOS)/ => 'mongo-10gen-server',
-		default               => undef,
+	$server_pkg_name = $::osfamily ? {
+		debian  => 'mongodb-10gen',
+		redhat  => 'mongo-10gen-server',
 	}
 
-	$old_server_pkg_name = $operatingsystem ? {
-		/(?i)(Debian|Ubuntu)/ => 'mongodb-stable',
-		/(?i)(Redhat|CentOS)/ => 'mongodb-server',
-		default               => undef,
+	$old_server_pkg_name = $::osfamily ? {
+		debian  => 'mongodb-stable',
+		redhat  => 'mongodb-server',
 	}
 
-	$run_as_user = 'mongod'
-	$run_as_group = 'mongod'
+	$old_servicename = $::osfamily ? {
+		debian  => 'mongodb',
+		redhat  => 'mongod',
+	}
+
+	$run_as_user = $::osfamily ? {
+		debian  => 'mongodb',
+		redhat  => 'mongod',
+	}
+
+	$run_as_group = $::osfamily ? {
+		debian  => 'mongodb',
+		redhat  => 'mongod',
+	}
 
 	# directorypath to store db directory in
 	# subdirectories for each mongo instance will be created
@@ -33,5 +43,8 @@ class mongodb::params {
 
 	# directory for mongo logfiles
 
-	$logdir = '/var/log/mongo'
+	$logdir = $::osfamily ? {
+		debian  => '/var/log/mongodb',
+		redhat  => '/var/log/mongo',
+	}
 }
