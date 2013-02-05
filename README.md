@@ -10,15 +10,6 @@ Ubuntu 10.04 and newer
 
 # Requirements
 
-If you use Debian/Ubuntu you need a class which installes the mongodb repository.  
-You have to change that in params.pp and install.pp or remove the repo part from install.pp if you
-have other ways to get the mongodb repo into your server.  
-
-For Redhat/CentOS there is an yum repo defined in /repos/yum.pp, which will be used as default.  
-
-All information about how to configure the mongodb repo of your OS can be found here:  
-http://docs.mongodb.org/manual/installation/  
-
 ### Modules needed:  
 
 puppetlabs-stdlib ( https://github.com/puppetlabs/puppetlabs-stdlib )  
