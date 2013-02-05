@@ -1,4 +1,4 @@
-name         'dwerder-mongodb'
+name         'echocat-mongodb'
 version      '2.0.1'
 source       'git clone https://github.com/echocat/puppet-mongodb.git'
 author       'echocat / Daniel Werdermann'
