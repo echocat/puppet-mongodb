@@ -5,6 +5,7 @@ class mongodb::params {
 
 	$repo_class = $::osfamily ? {
 		redhat => 'mongodb::repos::yum',
+		debian => 'mongodb::repos::apt',
 	}
 
 	$server_pkg_name = $::osfamily ? {
