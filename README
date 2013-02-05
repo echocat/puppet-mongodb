@@ -21,7 +21,8 @@ http://docs.mongodb.org/manual/installation/
 
 ### Modules needed:
 
-stdlib by puppetlabs
+puppetlabs-stdlib ( https://github.com/puppetlabs/puppetlabs-stdlib )
+puppetlabs-apt ( https://github.com/puppetlabs/puppetlabs-apt ) only for Debian/Ubuntu
 
 ### Software versions needed:
 facter > 1.6.2
