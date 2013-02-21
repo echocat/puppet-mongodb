@@ -81,7 +81,7 @@ class mongodb inherits mongodb::params {
 			hasstatus  => true,
 			hasrestart => true,
 			require    => [
-				File["/etc/init.d/mongod_${mongod_instance}"],
+				File["/etc/mongod_${mongod_instance}.conf", "/etc/init.d/mongod_${mongod_instance}"],
 				Service["${::mongodb::params::old_servicename}"]
 			],
 			before     => Anchor['mongodb::end']
@@ -121,7 +121,7 @@ class mongodb inherits mongodb::params {
 			hasstatus  => true,
 			hasrestart => true,
 			require    => [
-				File["/etc/init.d/mongos_${mongos_instance}"],
+				File["/etc/mongos_${mongos_instance}.conf", "/etc/init.d/mongos_${mongos_instance}"],
 				Service["${::mongodb::params::old_servicename}"]
 			],
 			before     => Anchor['mongodb::end']
