@@ -57,6 +57,8 @@ class mongodb inherits mongodb::params {
 		$mongod_logappend = 'true',
 		$mongod_rest = 'true',
 		$mongod_fork = 'true',
+		$mongod_auth = 'false',
+		$mongod_useauth = 'false',
 		$mongod_add_options = ''
 	) {
 		file {
@@ -73,6 +75,15 @@ class mongodb inherits mongodb::params {
 				},
 				mode    => '0755',
 				require => Class['mongodb::install'],
+		}
+
+		if ($mongod_useauth != 'false'){
+			file { "/etc/mongod_${mongod_instance}.key":
+				content => template('mongodb/mongod.key.erb'),
+				mode    => '0700',
+				require => Class['mongodb::install'],
+				notify  => Service["mongod_${mongod_instance}"],
+			}
 		}
 
 		service { "mongod_${mongod_instance}":

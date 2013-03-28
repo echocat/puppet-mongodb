@@ -30,6 +30,12 @@ port=<%= mongod_port %>
 <% if mongod_replSet != "" -%>
 replSet=<%= mongod_replSet %>
 <% end %>
+<% if mongod_auth != false -%>
+auth=<%= mongod_auth %>
+<% end %>
+<% if mongod_useauth != 'false' -%>
+keyFile = /etc/mongod_<%= mongod_instance %>.key
+<% end -%>
 
 <% mongod_add_options.each do |addoption| %>
 <%= addoption %>
