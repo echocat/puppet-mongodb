@@ -48,4 +48,8 @@ class mongodb::params {
 		debian  => '/var/log/mongodb',
 		redhat  => '/var/log/mongo',
 	}
+
+	# specify ulimit - 64000 is recommended setting from mongodb manual/administration/ulimit
+
+	$ulimit_nofiles = 1024
 }
