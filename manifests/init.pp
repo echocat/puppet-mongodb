@@ -81,6 +81,7 @@ class mongodb inherits mongodb::params {
 			file { "/etc/mongod_${mongod_instance}.key":
 				content => template('mongodb/mongod.key.erb'),
 				mode    => '0700',
+				owner   => "$mongodb::params::run_as_user",
 				require => Class['mongodb::install'],
 				notify  => Service["mongod_${mongod_instance}"],
 			}
