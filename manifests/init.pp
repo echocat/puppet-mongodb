@@ -59,6 +59,7 @@ class mongodb inherits mongodb::params {
 		$mongod_fork = 'true',
 		$mongod_auth = 'false',
 		$mongod_useauth = 'false',
+		$mongod_monit = false,
 		$mongod_add_options = ''
 	) {
 		file {
@@ -75,6 +76,16 @@ class mongodb inherits mongodb::params {
 				},
 				mode    => '0755',
 				require => Class['mongodb::install'],
+		}
+
+		if ($mongod_monit != false){
+			#notify { "mongod_monit is : ${mongod_monit}": }
+			class { 'mongodb::monit':
+				instance_name => "$mongod_instance",
+				instance_port => "$mongod_port",
+				require => Anchor['mongodb::install::end'],
+				before => Anchor['mongodb::end'],
+			}
 		}
 
 		if ($mongod_useauth != 'false'){
