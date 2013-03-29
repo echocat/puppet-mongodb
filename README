@@ -33,6 +33,9 @@ puppet > 2.6.2
    mongod_logappend = Enable/Disable log file appending (default: true)
    mongod_rest = Enable/Disable REST api (default: true)
    mongod_fork = Enable/Disable fork of mongod process (default: true)
+   mongod_auth = Enable/Disable auth true/false (default: false)
+   mongod_useauth = Keyfile contents. Your random string/false (default: false)
+   mongod_monit = Use monit monitoring for mongod instances (default: false)
    mongod_add_options = Array. Each field is "key" or "key=value" for parameters for config file
 
   Starting mongos (mongo loadbalancer)
