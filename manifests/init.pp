@@ -30,7 +30,7 @@ class mongodb inherits mongodb::params {
 			enable => false,
 			hasstatus => true,
 			hasrestart => true,
-			require => Anchor['mongodb::install::end'],
+			subscribe => Package['mongodb-10gen'],
 			before => Anchor['mongodb::end'],
 	}
 
