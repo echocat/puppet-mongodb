@@ -53,7 +53,7 @@ start()
 stop()
 {
   echo -n $"Stopping mongod_<%= mongod_instance %>: "
-  killproc -p "$PIDFILE" -d 300 $mongod 
+  killproc -p "$PIDFILE" -d 300 $mongod
   RETVAL=$?
   rm "$PIDFILE"
   echo
