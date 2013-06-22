@@ -79,10 +79,10 @@ puppet > 2.6.2
 
     	# Install the MongoDB Loadbalancer server
     	mongodb::mongos {
-    		"mongos_profile":
-    			mongos_instance => "mongoproxy",
-    			mongos_port => 27017,
-				mongos_configServers => "mongo1.my.domain:27018,mongo2.my.domain:27018,mongo3.my.domain:27018"
+    		'mongos_profile':
+    			mongos_instance      => 'mongoproxy',
+    			mongos_port          => 27017,
+				  mongos_configServers => 'mongo1.my.domain:27018,mongo2.my.domain:27018,mongo3.my.domain:27018';
     	}
 	}
 
@@ -93,10 +93,10 @@ puppet > 2.6.2
 		# Install the MongoDB config server
 		include mongodb
 		mongodb::mongod {
-			"mongod_config":
-				mongod_instance => "profileConfig",
-				mongod_port => '27018',
-				mongod_replSet => '',
+			'mongod_config':
+				mongod_instance  => 'profileConfig',
+				mongod_port      => '27018',
+				mongod_replSet   => '',
 				mongod_configsvr => 'true'
 		}
 	}
