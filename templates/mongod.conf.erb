@@ -13,11 +13,11 @@ rest=<%= mongod_rest %>
 
 fork=<%= mongod_fork %>
 
-<% if mongod_shardsvr != "false" -%>
+<% if mongod_shardsvr != false -%>
 shardsvr=<%= mongod_shardsvr %>
 <% end %>
 
-<% if mongod_configsvr != "false" -%>
+<% if mongod_configsvr != false -%>
 configsvr=<%= mongod_configsvr %>
 <% end %>
 
@@ -33,7 +33,7 @@ replSet=<%= mongod_replSet %>
 <% if mongod_auth != false -%>
 auth=<%= mongod_auth %>
 <% end %>
-<% if mongod_useauth != 'false' -%>
+<% if mongod_useauth != false -%>
 keyFile = /etc/mongod_<%= mongod_instance %>.key
 <% end -%>
 
