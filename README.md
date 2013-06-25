@@ -4,51 +4,51 @@ This module manages mongodb services. It provides the functions for mongod and m
 
 # Works for
 
-RHEL/CentOS 6+
-Debian 6+
+RHEL/CentOS 6+  
+Debian 6+  
 Ubuntu 10.04 and newer
 
 # Requirements
 
 ### Modules needed:
 
-puppetlabs-stdlib ( https://github.com/puppetlabs/puppetlabs-stdlib )
+puppetlabs-stdlib ( https://github.com/puppetlabs/puppetlabs-stdlib )  
 puppetlabs-apt ( https://github.com/puppetlabs/puppetlabs-apt ) only for Debian/Ubuntu
 
 ### Software versions needed:
-facter > 1.6.2
+facter > 1.6.2  
 puppet > 2.6.2
 
 # Parameters:
 ### Starting mongod
 
-   mongod_instance = despription of mongd service (shard1, config, etc)  (required)
-   mongod_bind_ip = listen ip (defaul; emtpy, so listen in all)
-   mongod_port = listen port (defaul; 27017)
-   mongod_replSet = Name of ReplSet (optional)
-   mongod_enable = Enable/Disable service at boot (default: true)
-   mongod_running = Start/Stop service (default: true)
-   mongod_configsvr = is config server true/false (default: false)
-   mongod_shardsvr = is shard server true/false (default: false)
-   mongod_logappend = Enable/Disable log file appending (default: true)
-   mongod_rest = Enable/Disable REST api (default: true)
-   mongod_fork = Enable/Disable fork of mongod process (default: true)
-   mongod_auth = Enable/Disable auth true/false (default: false)
-   mongod_useauth = Keyfile contents. Your random string/false (default: false)
-   mongod_monit = Use monit monitoring for mongod instances (default: false)
-   mongod_add_options = Array. Each field is "key" or "key=value" for parameters for config file
+   mongod_instance = despription of mongd service (shard1, config, etc)  (required)  
+   mongod_bind_ip = listen ip (defaul; emtpy, so listen in all)  
+   mongod_port = listen port (defaul; 27017)  
+   mongod_replSet = Name of ReplSet (optional)  
+   mongod_enable = Enable/Disable service at boot (default: true)  
+   mongod_running = Start/Stop service (default: true)  
+   mongod_configsvr = is config server true/false (default: false)  
+   mongod_shardsvr = is shard server true/false (default: false)  
+   mongod_logappend = Enable/Disable log file appending (default: true)  
+   mongod_rest = Enable/Disable REST api (default: true)  
+   mongod_fork = Enable/Disable fork of mongod process (default: true)  
+   mongod_auth = Enable/Disable auth true/false (default: false)  
+   mongod_useauth = Keyfile contents. Your random string/false (default: false)  
+   mongod_monit = Use monit monitoring for mongod instances (default: false)  
+   mongod_add_options = Array. Each field is "key" or "key=value" for parameters for config file  
 
 ### Starting mongos (mongo loadbalancer)
 
-   mongos_instance = despription of mongd service (shard1, config, etc)  (required)
-   mongos_bind_ip = listen ip (defaul; emtpy, so listen in all)
-   mongos_port = listen port (defaul; 27017)
-   mongos_configServers = String with comma seperated list of config servers (optional)
-   mongos_enable = Enable/Disable service at boot (default: true)
-   mongos_running = Start/Stop service (default: true)
-   mongos_logappend = Enable/Disable log file appending (default: true)
-   mongos_fork = Enable/Disable fork of mongod process (default: true)
-   mongos_add_options = Array. Each field is "key" or "key=value" for parameters for config file
+   mongos_instance = despription of mongd service (shard1, config, etc)  (required)  
+   mongos_bind_ip = listen ip (defaul; emtpy, so listen in all)  
+   mongos_port = listen port (defaul; 27017)  
+   mongos_configServers = String with comma seperated list of config servers (optional)  
+   mongos_enable = Enable/Disable service at boot (default: true)  
+   mongos_running = Start/Stop service (default: true)  
+   mongos_logappend = Enable/Disable log file appending (default: true)  
+   mongos_fork = Enable/Disable fork of mongod process (default: true)  
+   mongos_add_options = Array. Each field is "key" or "key=value" for parameters for config file  
 
 # Sample Usage:
 
