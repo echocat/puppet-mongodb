@@ -55,7 +55,7 @@ stop()
   echo -n $"Stopping mongod_<%= mongod_instance %>: "
   killproc -p "$PIDFILE" -d 300 $mongod
   RETVAL=$?
-  rm "$PIDFILE"
+  [ -f "$PIDFILE" ] && rm "$PIDFILE"
   echo
   [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mongod_<%= mongod_instance %>
 }
