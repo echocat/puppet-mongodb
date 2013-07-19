@@ -43,7 +43,7 @@ stop()
   echo -n $"Stopping mongos_<%= mongos_instance %>: "
   killproc -p "$PIDFILE" -d 30 $mongos -TERM
   RETVAL=$?
-  rm "$PIDFILE"
+  [ -f "$PIDFILE" ] && rm "$PIDFILE"
   echo
 }
 
