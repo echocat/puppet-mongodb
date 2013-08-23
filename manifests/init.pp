@@ -43,5 +43,17 @@ class mongodb inherits mongodb::params {
             require => Service[$::mongodb::params::old_servicename],
             before  => Anchor['mongodb::end'],
     }
+
+  mongodb::limits::conf {
+    'mongod-soft':
+      type  => soft,
+      item  => nofile,
+      value => $mongodb::params::ulimit_nofiles;
+    'mongod-hard':
+      type  => hard,
+      item  => nofile,
+      value => $mongodb::params::ulimit_nofiles;
+  }
+
 }
 
