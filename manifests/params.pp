@@ -50,5 +50,5 @@ class mongodb::params {
 
     # specify ulimit - 64000 is recommended setting from mongodb manual/administration/ulimit
 
-    $ulimit_nofiles = 1024
+    $ulimit_nofiles = 64000
 }

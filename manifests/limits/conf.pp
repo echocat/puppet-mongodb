@@ -3,7 +3,7 @@ define mongodb::limits::conf (
     $domain = $mongodb::params::run_as_user,
     $type = soft,
     $item = nofile,
-    $value = 1024
+    $value = 64000
 ) {
 
     # guid of this entry
