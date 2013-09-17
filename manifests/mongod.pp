@@ -60,7 +60,7 @@ define mongodb::mongod (
         hasrestart => true,
         require    => [
             File["/etc/mongod_${mongod_instance}.conf", "/etc/init.d/mongod_${mongod_instance}"],
-            Service[$::mongodb::params::old_servicename]
+            Exec['stop-default-mongod-service']
             ],
             before => Anchor['mongodb::end']
     }
