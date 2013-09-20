@@ -53,6 +53,14 @@ define mongodb::mongod (
         }
     }
 
+    file { $mongodb::params::logdir:
+        ensure  => directory,
+        owner   => $mongodb::params::run_as_user,
+        group   => $mongodb::params::run_as_group,
+        require => Exec['stop-default-mongod-service'],
+        before  => Service["mongod_${mongod_instance}"]
+    }
+
     service { "mongod_${mongod_instance}":
         ensure     => $mongod_running,
         enable     => $mongod_enable,
@@ -62,7 +70,7 @@ define mongodb::mongod (
             File["/etc/mongod_${mongod_instance}.conf", "/etc/init.d/mongod_${mongod_instance}"],
             Exec['stop-default-mongod-service']
             ],
-            before => Anchor['mongodb::end']
+        before => Anchor['mongodb::end']
     }
 
 }

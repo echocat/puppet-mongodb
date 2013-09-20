@@ -1,6 +1,12 @@
 # == Class: mongodb::params
 #
-class mongodb::params {
+class mongodb::params (
+
+	$user  = undef,
+	$group = undef,
+	$dbdir = '/var/lib',
+
+) {
 
     $repo_class = $::osfamily ? {
         redhat => 'mongodb::repos::yum',
@@ -22,27 +28,28 @@ class mongodb::params {
         redhat  => 'mongod',
     }
 
-  if $run_as_user == undef {
-    $run_as_user = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
+    if $user {
+      $run_as_user = $user
+    } else {
+      $run_as_user = $::osfamily ? {
+          debian  => 'mongodb',
+          redhat  => 'mongod',
+      }
     }
 
-  }
-
-  if $run_as_group == undef {
-    $run_as_group = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
+    if $group {
+      $run_as_group = $group
+    } else {
+      $run_as_group = $::osfamily ? {
+          debian  => 'mongodb',
+          redhat  => 'mongod',
+      }
     }
-  }
 
     # directorypath to store db directory in
     # subdirectories for each mongo instance will be created
 
-	if $dbdir == undef {
-    $dbdir = '/var/lib'
-  }
+    #$dbdir = '/var/lib'
 
     # numbers of files (days) to keep by logrotate
 
@@ -50,12 +57,10 @@ class mongodb::params {
 
     # directory for mongo logfiles
 
-  if $logdir == undef {
     $logdir = $::osfamily ? {
         debian  => '/var/log/mongodb',
         redhat  => '/var/log/mongo',
     }
-  }
 
     # specify ulimit - 64000 is recommended setting from mongodb manual/administration/ulimit
 
