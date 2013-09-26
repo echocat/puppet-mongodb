@@ -20,3 +20,7 @@ configdb = <%= mongos_configServers %>
 <% mongos_add_options.each do |addoption| %>
 <%= addoption %>
 <% end %>
+
+<% if mongos_useauth != false -%>
+keyFile = /etc/mongos_<%= mongos_instance %>.key
+<% end -%>
