@@ -1,6 +1,12 @@
 # == Class: mongodb::params
 #
-class mongodb::params {
+class mongodb::params (
+
+	$user  = undef,
+	$group = undef,
+	$dbdir = '/var/lib',
+
+) {
 
     $repo_class = $::osfamily ? {
         redhat => 'mongodb::repos::yum',
@@ -22,20 +28,28 @@ class mongodb::params {
         redhat  => 'mongod',
     }
 
-    $run_as_user = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
+    if $user {
+      $run_as_user = $user
+    } else {
+      $run_as_user = $::osfamily ? {
+          debian  => 'mongodb',
+          redhat  => 'mongod',
+      }
     }
 
-    $run_as_group = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
+    if $group {
+      $run_as_group = $group
+    } else {
+      $run_as_group = $::osfamily ? {
+          debian  => 'mongodb',
+          redhat  => 'mongod',
+      }
     }
 
     # directorypath to store db directory in
     # subdirectories for each mongo instance will be created
 
-    $dbdir = '/var/lib'
+    #$dbdir = '/var/lib'
 
     # numbers of files (days) to keep by logrotate
 

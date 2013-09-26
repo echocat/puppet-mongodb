@@ -121,10 +121,10 @@ running() {
 start_server() {
   mkdir -p $DBPATH || exit 5
   chown -R ${DAEMONUSER}:${DAEMONGROUP} $DBPATH
-# Start the process using the wrapper
+  #Start the process using the wrapper
             start-stop-daemon --background --start --quiet --pidfile $PIDFILE \
                         --make-pidfile --chuid $DAEMONUSER \
-                        --exec $NUMACTL $DAEMON $DAEMON_DELIMITER $DAEMON_OPTS
+                         --exec $NUMACTL $DAEMON $DAEMON_DELIMITER $DAEMON_OPTS
             errcode=$?
 	return $errcode
 }
