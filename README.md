@@ -48,6 +48,7 @@ puppet > 2.6.2
    mongos_running = Start/Stop service (default: true)  
    mongos_logappend = Enable/Disable log file appending (default: true)  
    mongos_fork = Enable/Disable fork of mongod process (default: true)  
+   mongos_useauth = Keyfile contents. Your random string/false (default: false)
    mongos_add_options = Array. Each field is "key" or "key=value" for parameters for config file  
 
 # Sample Usage:

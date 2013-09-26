@@ -8,6 +8,7 @@ define mongodb::mongos (
     $mongos_running = true,
     $mongos_logappend = true,
     $mongos_fork = true,
+    $mongos_useauth = false,
     $mongos_add_options = ''
 ) {
     file {
@@ -24,6 +25,15 @@ define mongodb::mongos (
             },
             mode    => '0755',
             require => Class['mongodb::install'],
+    }
+
+    if ($mongos_useauth != false){
+        file { "/etc/mongos_${mongos_instance}.key":
+            content => template('mongodb/mongos.key.erb'),
+            mode    => '0700',
+            owner   => $mongodb::params::run_as_user,
+            notify  => Service["mongos_${mongos_instance}"],
+        }
     }
 
     service {
