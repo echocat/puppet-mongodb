@@ -39,7 +39,8 @@ class mongodb inherits mongodb::params {
 
     file {
         "/etc/init.d/${::mongodb::params::old_servicename}":
-            ensure  => absent,
+            ensure  => present,
+            content => template("$module_name/replacement_mongod-init.conf.erb"),
             require => Service[$::mongodb::params::old_servicename],
             mode    => 0755,
             before  => Anchor['mongodb::end'],
