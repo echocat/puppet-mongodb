@@ -1,5 +1,5 @@
-name         'echocat-mongodb'
-version      '2.0.1'
+name         'dwerder-mongodb'
+version      '3.1.0'
 source       'git clone https://github.com/echocat/puppet-mongodb.git'
 author       'echocat / Daniel Werdermann'
 license      'Mozilla Public License Version 2.0'
