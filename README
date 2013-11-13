@@ -60,7 +60,7 @@ puppet > 2.6.2
 			"my_mongod_instanceX":
 				mongod_instance => "mongodb1",
 				mongod_replSet => "mongoShard1",
-				mongod_add_options => ['fastsync','slowms = 50']
+				mongod_add_options => ['slowms = 50']
 		}
 	}
 
