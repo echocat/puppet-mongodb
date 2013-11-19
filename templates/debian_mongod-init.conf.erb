@@ -57,7 +57,7 @@ NAME=mongodb_<%= mongod_instance %>
 # http://docs.mongodb.org/manual/reference/configuration-options/
 CONF="/etc/mongod_<%= mongod_instance %>.conf"
 DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONF"`
-PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONF"`
+PIDFILE=<%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= mongod_instance %>/mongod.lock
 ENABLE_MONGODB=yes
 
 # Handle NUMA access to CPUs (SERVER-3574)
@@ -122,8 +122,8 @@ start_server() {
   mkdir -p $DBPATH || exit 5
   chown -R ${DAEMONUSER}:${DAEMONGROUP} $DBPATH
 # Start the process using the wrapper
-            start-stop-daemon --background --start --quiet --pidfile $PIDFILE \
-                        --make-pidfile --chuid $DAEMONUSER \
+            start-stop-daemon --background --start --quiet \
+                        --chuid $DAEMONUSER \
                         --exec $NUMACTL $DAEMON $DAEMON_DELIMITER $DAEMON_OPTS
             errcode=$?
 	return $errcode
