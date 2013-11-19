@@ -15,7 +15,7 @@ class mongodb::monit ($instance_name, $instance_port){
         }
     }
 
-    case $osfamily {
+    case $::osfamily {
     'RedHat': {
       file {
         "/etc/monit.d/mongod_${instance_name}":
@@ -41,6 +41,6 @@ class mongodb::monit ($instance_name, $instance_port){
       }
     }
     'default': {
-        notice("Currently not supported osfamily: $osfamily")
+        notice("Currently not supported osfamily: $::osfamily")
     }
 }
