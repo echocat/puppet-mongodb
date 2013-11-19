@@ -15,14 +15,32 @@ class mongodb::monit ($instance_name, $instance_port){
         }
     }
 
-    file {
+    case $osfamily {
+    'RedHat': {
+      file {
         "/etc/monit.d/mongod_${instance_name}":
-            content    => template('mongodb/mongodb.monit.erb'),
-            require    => [
-                Package['monit'],
-                Class['mongodb::install'],
-                Class['mongodb::params']
-                ],
-                before => Anchor['mongodb::monit::end']
+          content    => template('mongodb/mongodb.monit.erb'),
+          require    => [
+            Package['monit'],
+            Class['mongodb::install'],
+            Class['mongodb::params']
+            ],
+          before => Anchor['mongodb::monit::end']
+      }
+    }
+    'Debian': {
+      file {
+        "/etc/monit/conf.d/mongod_${instance_name}":
+          content    => template('mongodb/mongodb.monit.erb'),
+          require    => [
+            Package['monit'],
+            Class['mongodb::install'],
+            Class['mongodb::params']
+            ],
+          before => Anchor['mongodb::monit::end']
+      }
+    }
+    'default': {
+        notice("Currently not supported osfamily: $osfamily")
     }
 }
