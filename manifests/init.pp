@@ -1,6 +1,13 @@
 # == Class: mongodb
 #
-class mongodb inherits mongodb::params {
+class mongodb (
+  $dbdir           = $mongodb::params::dbdir,
+  $pidfile         = $mongodb::params::pidfile,
+  $lockfile        = $mongodb::params::lockfile,
+  $logdir          = $mongodb::params::logdir,
+  $logrotatenumber = $mongodb::params::logrotatenumber,
+  $ulimit_nofiles  = $mongodb::params::ulimit_nofiles
+) inherits mongodb::params {
 
     anchor{ 'mongodb::begin':
         before => Anchor['mongodb::install::begin'],
