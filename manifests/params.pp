@@ -53,11 +53,8 @@ class mongodb::params {
 
     $ulimit_nofiles = 64000
 
-    # specify pidfile
+    # specify pidfilepath
 
-    $pidfile = "${dbdir}/mongod.pid"
+    $pidfilepath = "${dbdir}"
 
-    # specify lockfile
-
-    $lockfile = "${dbdir}/mongod.lock"
 }
