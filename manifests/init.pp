@@ -5,7 +5,10 @@ class mongodb (
   $pidfilepath     = $mongodb::params::pidfilepath,
   $logdir          = $mongodb::params::logdir,
   $logrotatenumber = $mongodb::params::logrotatenumber,
-  $ulimit_nofiles  = $mongodb::params::ulimit_nofiles
+  $ulimit_nofiles  = $mongodb::params::ulimit_nofiles,
+  $run_as_user     = $mongodb::params::run_as_user,
+  $run_as_group    = $mongodb::params::run_as_group,
+  $old_servicename = $mongodb::params::old_servicename
 ) inherits mongodb::params {
 
     anchor{ 'mongodb::begin':
