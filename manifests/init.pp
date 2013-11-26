@@ -2,8 +2,7 @@
 #
 class mongodb (
   $dbdir           = $mongodb::params::dbdir,
-  $pidfile         = $mongodb::params::pidfile,
-  $lockfile        = $mongodb::params::lockfile,
+  $pidfilepath     = $mongodb::params::pidfilepath,
   $logdir          = $mongodb::params::logdir,
   $logrotatenumber = $mongodb::params::logrotatenumber,
   $ulimit_nofiles  = $mongodb::params::ulimit_nofiles
