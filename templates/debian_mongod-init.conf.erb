@@ -57,7 +57,7 @@ NAME=mongodb_<%= mongod_instance %>
 # http://docs.mongodb.org/manual/reference/configuration-options/
 CONF="/etc/mongod_<%= mongod_instance %>.conf"
 DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONF"`
-PIDFILE=<%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= mongod_instance %>/mongod.lock
+PIDFILE=<%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= mongod_instance %>/mongod.pid
 ENABLE_MONGODB=yes
 
 # Handle NUMA access to CPUs (SERVER-3574)
