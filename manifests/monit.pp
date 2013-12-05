@@ -43,4 +43,5 @@ class mongodb::monit ($instance_name, $instance_port){
     'default': {
         notice("Currently not supported osfamily: $::osfamily")
     }
+  }
 }
