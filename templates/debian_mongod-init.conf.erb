@@ -51,13 +51,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/mongod
 DESC=database
 
-NAME=mongodb_<%= mongod_instance %>
+NAME=mongodb_<%= @mongod_instance %>
 # Defaults.  Can be overridden by the /etc/default/$NAME
 # Other configuration options are located in $CONF file. See here for more:
 # http://docs.mongodb.org/manual/reference/configuration-options/
-CONF="/etc/mongod_<%= mongod_instance %>.conf"
+CONF="/etc/mongod_<%= @mongod_instance %>.conf"
 DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONF"`
-PIDFILE=<%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= mongod_instance %>/mongod.pid
+PIDFILE=<%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= @mongod_instance %>/mongod.pid
 ENABLE_MONGODB=yes
 
 # Handle NUMA access to CPUs (SERVER-3574)
