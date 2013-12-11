@@ -65,7 +65,7 @@ restart () {
         start
 }
 
-ulimit -n <%= scope.lookupvar('mongodb::params::ulimit_nofiles') %>
+ulimit -n <%= scope.lookupvar('mongodb::ulimit_nofiles') %>
 RETVAL=0
 
 case "$1" in
