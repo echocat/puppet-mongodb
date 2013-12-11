@@ -20,6 +20,22 @@ facter > 1.6.2
 puppet > 2.6.2
 
 # Parameters:
+
+### Global
+
+Most global parameters are set in params.pp and should fit the most use cases.  
+But you can also set them, when including class mongodb.  
+Parameters:  
+
+  dbdir           = mongodb::params::dbdir,  
+  pidfilepath     = mongodb::params::pidfilepath,  
+  logdir          = mongodb::params::logdir,  
+  logrotatenumber = mongodb::params::logrotatenumber,  
+  ulimit_nofiles  = mongodb::params::ulimit_nofiles,  
+  run_as_user     = mongodb::params::run_as_user,  
+  run_as_group    = mongodb::params::run_as_group,  
+  old_servicename = mongodb::params::old_servicename  
+
 ### Starting mongod
 
    mongod_instance = despription of mongd service (shard1, config, etc)  (required)  
@@ -106,6 +122,23 @@ puppet > 2.6.2
 	}
 
 	node 'mongo4.my.domain' inherits mongo_sharding_default { }
+</pre>
+
+## Change run as user and logdir path
+<pre>
+    node mongod.my.domain {
+        class { 'mongodb':
+          run_as_user  => mongod,
+          run_as_group => wheel,
+          logdir       => '/nfsshare/mymongologs/'
+        }
+        mongodb::mongod {
+            'my_mongod_instanceX':
+                mongod_instance    => 'mongodb1',
+                mongod_replSet     => 'mongoShard1',
+                mongod_add_options => ['fastsync','slowms = 50']
+        }
+    }
 </pre>
 
 
