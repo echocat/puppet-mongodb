@@ -77,8 +77,8 @@ DIETIME=10                   # Time to wait for the server to die, in seconds
                             # let some servers to die gracefully and
                             # 'restart' will not work
 
-DAEMONUSER=<%= scope.lookupvar('mongodb::params::run_as_user') %>
-DAEMONGROUP=<%= scope.lookupvar('mongodb::params::run_as_group') %>
+DAEMONUSER=<%= scope.lookupvar('mongodb::run_as_user') %>
+DAEMONGROUP=<%= scope.lookupvar('mongodb::run_as_group') %>
 DAEMON_OPTS=${DAEMON_OPTS:-"--config $CONF"}
 
 set -e
