@@ -1,0 +1,15 @@
+The full list and newest Release can be found on Github.com
+
+https://github.com/echocat/puppet-mongodb
+
+2013-12-11 - 3.2.1
+
+* fix a bunch of changed variables
+
+2013-12-11 - 3.2.0 
+
+# Release adds some more flexability for global parameters
+
+* add @ to puppet variables in erb, to avoid warnings
+* added user, group, old_servicename parameters to class mongodb
+* update Monit configuration file path for Ubuntu
