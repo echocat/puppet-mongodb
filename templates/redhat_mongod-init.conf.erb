@@ -7,7 +7,7 @@
 # description: Mongo is a scalable, document-oriented database.
 # processname: mongod
 # config: /etc/mongod_<%= @mongod_instance %>.conf
-# pidfile: <%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= @mongod_instance %>/mongod.pid
+# pidfile: <%= scope.lookupvar('mongodb::pidfilepath') %>/mongod_<%= @mongod_instance %>/mongod.pid
 
 . /etc/rc.d/init.d/functions
 
@@ -26,8 +26,8 @@ DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONFIGFILE"`
 PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONFIGFILE"`
 mongod=${MONGOD-/usr/bin/mongod}
 
-MONGO_USER=<%= scope.lookupvar('mongodb::params::run_as_user') %>
-MONGO_GROUP=<%= scope.lookupvar('mongodb::params::run_as_group') %>
+MONGO_USER=<%= scope.lookupvar('mongodb::run_as_user') %>
+MONGO_GROUP=<%= scope.lookupvar('mongodb::run_as_group') %>
 
 # Handle NUMA access to CPUs (SERVER-3574)
 # This verifies the existence of numactl as well as testing that the command works
