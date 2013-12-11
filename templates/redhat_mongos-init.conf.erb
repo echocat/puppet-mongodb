@@ -25,8 +25,8 @@ PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONFIGFILE"`
 DBPATH=`dirname $PIDFILE`
 mongos=/usr/bin/mongos
 
-MONGO_USER=<%= scope.lookupvar('mongodb::params::run_as_user') %>
-MONGO_GROUP=<%= scope.lookupvar('mongodb::params::run_as_group') %>
+MONGO_USER=<%= scope.lookupvar('mongodb::run_as_user') %>
+MONGO_GROUP=<%= scope.lookupvar('mongodb::run_as_group') %>
 
 start()
 {
@@ -52,7 +52,7 @@ restart () {
         start
 }
 
-ulimit -n <%= scope.lookupvar('mongodb::params::ulimit_nofiles') %>
+ulimit -n <%= scope.lookupvar('mongodb::ulimit_nofiles') %>
 RETVAL=0
 
 case "$1" in

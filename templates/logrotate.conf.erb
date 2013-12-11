@@ -5,18 +5,18 @@
 # Deleting MongoDB-generated files, and leaves the logrotate-files
 # alone (as they are named mongodb.log.[0-9].gz).
 
-<%= scope.lookupvar('mongodb::params::logdir') %>/*.log {
+<%= scope.lookupvar('mongodb::logdir') %>/*.log {
 	daily
 	missingok
-	rotate <%= scope.lookupvar('mongodb::params::logrotatenumber') %>
+	rotate <%= scope.lookupvar('mongodb::logrotatenumber') %>
 	compress
 	delaycompress
 	notifempty
-	create 0640 <%= scope.lookupvar('mongodb::params::run_as_user') -%> <%= scope.lookupvar('mongodb::params::run_as_group') %>
+	create 0640 <%= scope.lookupvar('mongodb::run_as_user') -%> <%= scope.lookupvar('mongodb::run_as_group') %>
 	sharedscripts
 	postrotate
 		killall -SIGUSR1 mongod
 		killall -SIGUSR1 mongos
-		find <%= scope.lookupvar('mongodb::params::logdir') %> -type f -regex ".*\.\(log.[0-9].*-[0-9].*\)" -exec rm {} \;
+		find <%= scope.lookupvar('mongodb::logdir') %> -type f -regex ".*\.\(log.[0-9].*-[0-9].*\)" -exec rm {} \;
 	endscript
 }
