@@ -1,14 +1,15 @@
 # == Class: mongodb
 #
 class mongodb (
-  $dbdir           = $mongodb::params::dbdir,
-  $pidfilepath     = $mongodb::params::pidfilepath,
-  $logdir          = $mongodb::params::logdir,
-  $logrotatenumber = $mongodb::params::logrotatenumber,
-  $ulimit_nofiles  = $mongodb::params::ulimit_nofiles,
-  $run_as_user     = $mongodb::params::run_as_user,
-  $run_as_group    = $mongodb::params::run_as_group,
-  $old_servicename = $mongodb::params::old_servicename
+  $dbdir                    = $mongodb::params::dbdir,
+  $pidfilepath              = $mongodb::params::pidfilepath,
+  $logdir                   = $mongodb::params::logdir,
+  $logrotatenumber          = $mongodb::params::logrotatenumber,
+  $logrotate_package_manage = $mongodb::params::logrotate_package_manage,
+  $ulimit_nofiles           = $mongodb::params::ulimit_nofiles,
+  $run_as_user              = $mongodb::params::run_as_user,
+  $run_as_group             = $mongodb::params::run_as_group,
+  $old_servicename          = $mongodb::params::old_servicename
 ) inherits mongodb::params {
 
     anchor{ 'mongodb::begin':
@@ -18,8 +19,9 @@ class mongodb (
     anchor { 'mongodb::end': }
 
     class { 'mongodb::logrotate':
-        require => Anchor['mongodb::install::end'],
-        before  => Anchor['mongodb::end'],
+        package_manage => $logrotate_package_manage,
+        require        => Anchor['mongodb::install::end'],
+        before         => Anchor['mongodb::end'],
     }
 
     case $::osfamily {
