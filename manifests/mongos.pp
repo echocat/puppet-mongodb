@@ -9,7 +9,7 @@ define mongodb::mongos (
     $mongos_logappend = true,
     $mongos_fork = true,
     $mongos_useauth = false,
-    $mongos_add_options = ''
+    $mongos_add_options = []
 ) {
     file {
         "/etc/mongos_${mongos_instance}.conf":
