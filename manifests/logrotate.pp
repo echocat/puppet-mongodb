@@ -3,12 +3,14 @@
 # This module manages mongodb services.
 # It provides the functions for mongod and mongos instances.
 #
-class mongodb::logrotate {
+class mongodb::logrotate (
+  $package_manage = true
+) {
 
     anchor { 'mongodb::logrotate::begin': }
     anchor { 'mongodb::logrotate::end': }
 
-    if ! defined(Package['logrotate']) {
+    if ($package_manage == true) {
         package {
             'logrotate':
                 ensure => installed;

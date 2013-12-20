@@ -41,6 +41,10 @@ class mongodb::params {
 
     $logrotatenumber = 7
 
+    # should this module manage the logrotate package?
+
+    $logrotate_package_manage = true
+
     # directory for mongo logfiles
 
     $logdir = $::osfamily ? {
