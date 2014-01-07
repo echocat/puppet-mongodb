@@ -18,7 +18,10 @@ class mongodb::install {
     package { 'mongodb-10gen':
         ensure  => $::mongodb::params::package_ensure,
         name    => $::mongodb::params::server_pkg_name,
-        require => [Anchor['mongodb::install::begin'],Class[$::mongodb::params::repo_class]],
+        require => [
+          Anchor['mongodb::install::begin'],
+          Class[$::mongodb::params::repo_class]
+        ],
         before  => Anchor['mongodb::install::end']
     }
 
