@@ -41,6 +41,10 @@ class mongodb::params {
 
     $logrotatenumber = 7
 
+    # package version / installed / absent
+
+    $package_ensure = 'installed'
+
     # should this module manage the logrotate package?
 
     $logrotate_package_manage = true
