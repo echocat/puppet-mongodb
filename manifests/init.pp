@@ -7,6 +7,7 @@ class mongodb (
   $logrotatenumber          = $mongodb::params::logrotatenumber,
   $logrotate_package_manage = $mongodb::params::logrotate_package_manage,
   $package_ensure           = $mongodb::params::package_ensure,
+  $repo_manage              = $mongodb::params::repo_manage,
   $ulimit_nofiles           = $mongodb::params::ulimit_nofiles,
   $run_as_user              = $mongodb::params::run_as_user,
   $run_as_group             = $mongodb::params::run_as_group,
@@ -27,7 +28,11 @@ class mongodb (
 
     case $::osfamily {
         /(?i)(Debian|RedHat)/: {
-            class { 'mongodb::install': }
+            class {
+                'mongodb::install':
+                    package_ensure => $package_ensure,
+                    repo_manage    => $repo_manage
+            }
         }
         default: {
             fail "Unsupported OS ${::operatingsystem} in 'mongodb' module"
