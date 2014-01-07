@@ -63,6 +63,6 @@ class mongodb::params {
 
     # specify pidfilepath
 
-    $pidfilepath = "${dbdir}"
+    $pidfilepath = $dbdir
 
 }
