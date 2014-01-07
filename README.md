@@ -27,14 +27,17 @@ Most global parameters are set in params.pp and should fit the most use cases.
 But you can also set them, when including class mongodb.  
 Parameters:  
 
-  dbdir           = mongodb::params::dbdir,  
-  pidfilepath     = mongodb::params::pidfilepath,  
-  logdir          = mongodb::params::logdir,  
-  logrotatenumber = mongodb::params::logrotatenumber,  
-  ulimit_nofiles  = mongodb::params::ulimit_nofiles,  
-  run_as_user     = mongodb::params::run_as_user,  
-  run_as_group    = mongodb::params::run_as_group,  
-  old_servicename = mongodb::params::old_servicename  
+   dbdir                    = $mongodb::params::dbdir,  
+   idfilepath               = $mongodb::params::pidfilepath,  
+   logdir                   = $mongodb::params::logdir,  
+   logrotatenumber          = $mongodb::params::logrotatenumber,  
+   logrotate_package_manage = $mongodb::params::logrotate_package_manage,  
+   package_ensure           = $mongodb::params::package_ensure,  
+   repo_manage              = $mongodb::params::repo_manage,  
+   ulimit_nofiles           = $mongodb::params::ulimit_nofiles,  
+   run_as_user              = $mongodb::params::run_as_user,  
+   run_as_group             = $mongodb::params::run_as_group,  
+   old_servicename          = $mongodb::params::old_servicename  
 
 ### Starting mongod
 
