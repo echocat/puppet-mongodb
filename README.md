@@ -28,7 +28,7 @@ But you can also set them, when including class mongodb.
 Parameters:  
 
    dbdir                    = $mongodb::params::dbdir,  
-   idfilepath               = $mongodb::params::pidfilepath,  
+   pidfilepath              = $mongodb::params::pidfilepath,  
    logdir                   = $mongodb::params::logdir,  
    logrotatenumber          = $mongodb::params::logrotatenumber,  
    logrotate_package_manage = $mongodb::params::logrotate_package_manage,  
