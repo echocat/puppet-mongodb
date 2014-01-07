@@ -41,6 +41,14 @@ class mongodb::params {
 
     $logrotatenumber = 7
 
+    # package version / installed / absent
+
+    $package_ensure = 'installed'
+
+    # should this module manage the mongodb repository from upstream?
+
+    $repo_manage = true
+
     # should this module manage the logrotate package?
 
     $logrotate_package_manage = true
@@ -59,6 +67,6 @@ class mongodb::params {
 
     # specify pidfilepath
 
-    $pidfilepath = "${dbdir}"
+    $pidfilepath = $dbdir
 
 }
