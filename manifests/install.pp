@@ -11,6 +11,14 @@ class mongodb::install (
 
     if ($repo_manage == true) {
         include $::mongodb::params::repo_class
+        $mongodb_10gen_package_require = [
+          Anchor['mongodb::install::begin'],
+          Class[$::mongodb::params::repo_class]
+        ]
+    } else {
+        $mongodb_10gen_package_require = [
+          Anchor['mongodb::install::begin']
+        ]
     }
 
     package { 'mongodb-stable':
@@ -23,10 +31,7 @@ class mongodb::install (
     package { 'mongodb-10gen':
         ensure  => $package_ensure,
         name    => $::mongodb::params::server_pkg_name,
-        require => [
-          Anchor['mongodb::install::begin'],
-          Class[$::mongodb::params::repo_class]
-        ],
+        require => $mongodb_10gen_package_require,
         before  => Anchor['mongodb::install::end']
     }
 
