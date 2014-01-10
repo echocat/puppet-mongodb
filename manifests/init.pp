@@ -60,6 +60,7 @@ class mongodb (
             content => template("${module_name}/replacement_mongod-init.conf.erb"),
             require => Service[$::mongodb::params::old_servicename],
             mode    => '0755',
+            replace => true,
             before  => Anchor['mongodb::end'],
     }
 
