@@ -146,6 +146,8 @@ force_stop() {
 	rm -f $PIDFILE
 }
 
+ulimit -n <%= scope.lookupvar('mongodb::ulimit_nofiles') %>
+ulimit -u <%= scope.lookupvar('mongodb::ulimit_nproc') %>
 
 case "$1" in
   start)

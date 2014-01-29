@@ -35,6 +35,7 @@ Parameters:
    package_ensure           = $mongodb::params::package_ensure,  
    repo_manage              = $mongodb::params::repo_manage,  
    ulimit_nofiles           = $mongodb::params::ulimit_nofiles,  
+   ulimit_nproc             = $mongodb::params::ulimit_nofiles,  
    run_as_user              = $mongodb::params::run_as_user,  
    run_as_group             = $mongodb::params::run_as_group,  
    old_servicename          = $mongodb::params::old_servicename  

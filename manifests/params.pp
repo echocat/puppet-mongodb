@@ -60,10 +60,11 @@ class mongodb::params {
         redhat  => '/var/log/mongo',
     }
 
-    # specify ulimit - 64000 is recommended setting from
-    # mongodb manual/administration/ulimit
+    # specify ulimit - nofile = 64000 and nproc = 32000 is recommended setting from
+    # http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
 
     $ulimit_nofiles = 64000
+    $ulimit_nproc   = 32000
 
     # specify pidfilepath
 

@@ -2,6 +2,11 @@ The full list and newest Release can be found on Github.com
 
 https://github.com/echocat/puppet-mongodb
 
+2014-01-29 - 3.3.1
+
+* set ulimit nproc (number of processes) to recommend value 32k (was 1024)
+* add parameter to set ulimit nproc
+
 2014-01-10 - 3.3.0
 
 * you can specify which version of mongodb to be installed (package_ensure)
