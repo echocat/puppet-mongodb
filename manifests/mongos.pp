@@ -4,6 +4,7 @@ define mongodb::mongos (
     $mongos_instance = $name,
     $mongos_bind_ip = '',
     $mongos_port = 27017,
+    $mongos_service_manage = true,
     $mongos_enable = true,
     $mongos_running = true,
     $mongos_logappend = true,
@@ -36,17 +37,19 @@ define mongodb::mongos (
         }
     }
 
-    service {
-        "mongos_${mongos_instance}":
-            ensure     => $mongos_running,
-            enable     => $mongos_enable,
-            hasstatus  => true,
-            hasrestart => true,
-            require    => [
-                File["/etc/mongos_${mongos_instance}.conf", "/etc/init.d/mongos_${mongos_instance}"],
-                Service[$::mongodb::params::old_servicename]
-                ],
-                before => Anchor['mongodb::end']
+    if ($mongos_service_manage == true){
+        service {
+            "mongos_${mongos_instance}":
+                ensure     => $mongos_running,
+                enable     => $mongos_enable,
+                hasstatus  => true,
+                hasrestart => true,
+                require    => [
+                    File["/etc/mongos_${mongos_instance}.conf", "/etc/init.d/mongos_${mongos_instance}"],
+                    Service[$::mongodb::params::old_servicename]
+                    ],
+                    before => Anchor['mongodb::end']
+        }
     }
 }
 
