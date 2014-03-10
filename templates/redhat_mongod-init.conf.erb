@@ -24,6 +24,7 @@ OPTIONS=" -f $CONFIGFILE"
 # for now.  This can go away when this script stops supporting 1.8.
 DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONFIGFILE"`
 PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONFIGFILE"`
+PIDPATH=`dirname $PIDFILE`
 mongod=${MONGOD-/usr/bin/mongod}
 
 MONGO_USER=<%= scope.lookupvar('mongodb::run_as_user') %>
@@ -44,6 +45,11 @@ start()
   echo -n $"Starting mongod_<%= @mongod_instance %>: "
   mkdir -p $DBPATH || exit 5
   chown -R ${MONGO_USER}:${MONGO_GROUP} $DBPATH
+  if [ "$DBPATH" != "$PIDPATH" ]
+  then
+    mkdir -p $PIDPATH || exit 5
+    chown -R ${MONGO_USER}:${MONGO_GROUP} $PIDPATH
+  fi
   daemon --user $MONGO_USER $NUMACTL $mongod $OPTIONS
   RETVAL=$?
   echo
