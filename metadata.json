@@ -1,0 +1,77 @@
+{
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat"
+    },
+    {
+      "operatingsystem": "CentOS"
+    },
+    {
+      "operatingsystem": "Scientific"
+    },
+    {
+      "operatingsystem": "Debian"
+    },
+    {
+      "operatingsystem": "Ubuntu"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": ">=2.7.20 <4.0.0"
+    }
+  ],
+  "name": "dwerder-mongodb",
+  "version": "3.3.1",
+  "source": "git clone https://github.com/echocat/puppet-mongodb.git",
+  "author": "echocat / Daniel Werdermann",
+  "license": "Mozilla Public License Version 2.0",
+  "summary": "MongoDB module with sharding",
+  "description": "Install, enable and configure the mongod and mongos. Optional with sharding.",
+  "project_page": "https://github.com/echocat/puppet-mongodb",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 2.2.1"
+    },
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">= 1.1.0"
+    }
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "CHANGELOG.md": "94d3b52b90c1058a35e4eb96e8c20e04",
+    "LICENSE": "430d435c77de93c32f59be4ecee43277",
+    "Modulefile": "ec7b0274c87ea9fa12031663a07bda0f",
+    "README.md": "47b604996e18606c206ec9260442a373",
+    "manifests/init.pp": "37b9962aa14454751f458bf6386591e7",
+    "manifests/install.pp": "37f57ce9b9bbd324a97fe85b6c040072",
+    "manifests/limits/conf.pp": "d43e3319d37bfa6ddfb507e7b460e515",
+    "manifests/logrotate.pp": "edf0bf96824630690989e05ffbbfa510",
+    "manifests/mongod.pp": "dfa9f3870328b4b1d971d970bb4f6a1d",
+    "manifests/mongos.pp": "d684a41a2df7754132893e3d197c2b15",
+    "manifests/monit.pp": "57acf9e40e034492d09721ebdcfe4579",
+    "manifests/params.pp": "2fa2d5780e79e452e5773e9858f485bf",
+    "manifests/repos/apt.pp": "4c1cd663bad641605bf74f33e701ba52",
+    "manifests/repos/yum.pp": "68b0dc9610235556c05149d758c20065",
+    "templates/debian_mongod-init.conf.erb": "e847cc6bf4eb11b2166dafd89b92f5e1",
+    "templates/debian_mongos-init.conf.erb": "3178e9af28b180150f43579da551f0da",
+    "templates/logrotate.conf.erb": "f831c6836436bac28f259c46ab193647",
+    "templates/mongod.conf.erb": "9b0beced4474d845ed01dbb85b830321",
+    "templates/mongod.key.erb": "6eee0ece0a2ee8748bbf0260e80e9a67",
+    "templates/mongodb.monit.erb": "aec2f8036663ea4914f0731f0deda557",
+    "templates/mongos.conf.erb": "a195f0bed523a329acda3c232fb61d58",
+    "templates/mongos.key.erb": "a7b524a6ac5a7d1ce6aa9521b25ec89e",
+    "templates/redhat_mongod-init.conf.erb": "7d8d5f73893aabae267448cdcdedcdf8",
+    "templates/redhat_mongos-init.conf.erb": "cfa357e3d5ec418e7af1c080a6faa9d7",
+    "templates/replacement_mongod-init.conf.erb": "7477f65bb0d5038ba365c82c06329742"
+  }
+}
