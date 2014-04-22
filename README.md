@@ -353,4 +353,4 @@ This module is tested on CentOS 6.5 and should also run without problems on
 
 ##Contributing
 
-Echocat modules are open projects. So if you want to make this module even better, you can contribute to this module on [Github](https://github.com/echocat/puppet-graphite).
+Echocat modules are open projects. So if you want to make this module even better, you can contribute to this module on [Github](https://github.com/echocat/puppet-mongodb).
