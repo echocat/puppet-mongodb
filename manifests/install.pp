@@ -3,7 +3,8 @@
 #
 class mongodb::install (
   $package_ensure = 'installed',
-  $repo_manage    = true
+  $repo_manage    = true,
+  $package_version = undef
 ) {
 
     anchor { 'mongodb::install::begin': }
@@ -19,6 +20,10 @@ class mongodb::install (
         $mongodb_10gen_package_require = [
           Anchor['mongodb::install::begin']
         ]
+    }
+    
+    if defined('$package_version') {
+      $package_ensure = "$package_version",
     }
 
     package { 'mongodb-stable':

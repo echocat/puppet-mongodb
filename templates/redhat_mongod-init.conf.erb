@@ -91,7 +91,7 @@ case "$1" in
     restart
     ;;
   condrestart)
-    [ -f /var/lock/subsys/mongod_<%= mongod_instance %> ] && restart || :
+    [ -f /var/lock/subsys/mongod_<%= @mongod_instance %> ] && restart || :
     ;;
   status)
     status -p $PIDFILE
