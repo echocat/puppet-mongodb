@@ -22,17 +22,17 @@ OPTIONS=" -f $CONFIGFILE"
 # shuts down the correct running pid, but that's unavailable in 1.8
 # for now.  This can go away when this script stops supporting 1.8.
 PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONFIGFILE"`
-DBPATH=`dirname $PIDFILE`
+PIDPATH=`dirname $PIDFILE`
 mongos=/usr/bin/mongos
 
-MONGO_USER=<%= scope.lookupvar('mongodb::params::run_as_user') %>
-MONGO_GROUP=<%= scope.lookupvar('mongodb::params::run_as_group') %>
+MONGO_USER=<%= scope.lookupvar('mongodb::run_as_user') %>
+MONGO_GROUP=<%= scope.lookupvar('mongodb::run_as_group') %>
 
 start()
 {
   echo -n $"Starting mongos_<%= @mongos_instance %>: "
-  mkdir -p $DBPATH || exit 5
-  chown -R ${MONGO_USER}:${MONGO_GROUP} $DBPATH
+  mkdir -p $PIDPATH || exit 5
+  chown -R ${MONGO_USER}:${MONGO_GROUP} $PIDPATH
   daemon --user $MONGO_USER $mongos $OPTIONS
   RETVAL=$?
   echo
@@ -52,7 +52,9 @@ restart () {
         start
 }
 
-ulimit -n <%= scope.lookupvar('mongodb::params::ulimit_nofiles') %>
+ulimit -n <%= scope.lookupvar('mongodb::ulimit_nofiles') %>
+ulimit -u <%= scope.lookupvar('mongodb::ulimit_nproc') %>
+
 RETVAL=0
 
 case "$1" in

@@ -6,8 +6,8 @@
 # chkconfig: 35 85 15
 # description: Mongo is a scalable, document-oriented database.
 # processname: mongod
-# config: /etc/mongod_<%= mongod_instance %>.conf
-# pidfile: <%= scope.lookupvar('mongodb::params::dbdir') %>/mongod_<%= mongod_instance %>/mongod.pid
+# config: /etc/mongod_<%= @mongod_instance %>.conf
+# pidfile: <%= scope.lookupvar('mongodb::pidfilepath') %>/mongod_<%= @mongod_instance %>/mongod.pid
 
 . /etc/rc.d/init.d/functions
 
@@ -16,7 +16,7 @@
 
 # NOTE: if you change any OPTIONS here, you get what you pay for:
 # this script assumes all options are in the config file.
-CONFIGFILE="/etc/mongod_<%= mongod_instance %>.conf"
+CONFIGFILE="/etc/mongod_<%= @mongod_instance %>.conf"
 OPTIONS=" -f $CONFIGFILE"
 
 # FIXME: 1.9.x has a --shutdown flag that parses the config file and
@@ -24,10 +24,11 @@ OPTIONS=" -f $CONFIGFILE"
 # for now.  This can go away when this script stops supporting 1.8.
 DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONFIGFILE"`
 PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONFIGFILE"`
+PIDPATH=`dirname $PIDFILE`
 mongod=${MONGOD-/usr/bin/mongod}
 
-MONGO_USER=<%= scope.lookupvar('mongodb::params::run_as_user') %>
-MONGO_GROUP=<%= scope.lookupvar('mongodb::params::run_as_group') %>
+MONGO_USER=<%= scope.lookupvar('mongodb::run_as_user') %>
+MONGO_GROUP=<%= scope.lookupvar('mongodb::run_as_group') %>
 
 # Handle NUMA access to CPUs (SERVER-3574)
 # This verifies the existence of numactl as well as testing that the command works
@@ -41,23 +42,28 @@ fi
 
 start()
 {
-  echo -n $"Starting mongod_<%= mongod_instance %>: "
+  echo -n $"Starting mongod_<%= @mongod_instance %>: "
   mkdir -p $DBPATH || exit 5
   chown -R ${MONGO_USER}:${MONGO_GROUP} $DBPATH
+  if [ "$DBPATH" != "$PIDPATH" ]
+  then
+    mkdir -p $PIDPATH || exit 5
+    chown -R ${MONGO_USER}:${MONGO_GROUP} $PIDPATH
+  fi
   daemon --user $MONGO_USER $NUMACTL $mongod $OPTIONS
   RETVAL=$?
   echo
-  [ $RETVAL -eq 0 ] && touch /var/lock/subsys/mongod_<%= mongod_instance %>
+  [ $RETVAL -eq 0 ] && touch /var/lock/subsys/mongod_<%= @mongod_instance %>
 }
 
 stop()
 {
-  echo -n $"Stopping mongod_<%= mongod_instance %>: "
+  echo -n $"Stopping mongod_<%= @mongod_instance %>: "
   killproc -p "$PIDFILE" -d 300 $mongod
   RETVAL=$?
   [ -f "$PIDFILE" ] && rm "$PIDFILE"
   echo
-  [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mongod_<%= mongod_instance %>
+  [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/mongod_<%= @mongod_instance %>
 }
 
 restart () {
@@ -65,7 +71,9 @@ restart () {
         start
 }
 
-ulimit -n <%= scope.lookupvar('mongodb::params::ulimit_nofiles') %>
+ulimit -n <%= scope.lookupvar('mongodb::ulimit_nofiles') %>
+ulimit -u <%= scope.lookupvar('mongodb::ulimit_nproc') %>
+
 RETVAL=0
 
 case "$1" in
@@ -83,7 +91,7 @@ case "$1" in
     restart
     ;;
   condrestart)
-    [ -f /var/lock/subsys/mongod_<%= mongod_instance %> ] && restart || :
+    [ -f /var/lock/subsys/mongod_<%= @mongod_instance %> ] && restart || :
     ;;
   status)
     status -p $PIDFILE

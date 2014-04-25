@@ -41,6 +41,18 @@ class mongodb::params {
 
     $logrotatenumber = 7
 
+    # package version / installed / absent
+
+    $package_ensure = 'installed'
+
+    # should this module manage the mongodb repository from upstream?
+
+    $repo_manage = true
+
+    # should this module manage the logrotate package?
+
+    $logrotate_package_manage = true
+
     # directory for mongo logfiles
 
     $logdir = $::osfamily ? {
@@ -48,13 +60,14 @@ class mongodb::params {
         redhat  => '/var/log/mongo',
     }
 
-    # specify ulimit - 64000 is recommended setting from
-    # mongodb manual/administration/ulimit
+    # specify ulimit - nofile = 64000 and nproc = 32000 is recommended setting from
+    # http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
 
     $ulimit_nofiles = 64000
+    $ulimit_nproc   = 32000
 
     # specify pidfilepath
 
-    $pidfilepath = "${dbdir}"
+    $pidfilepath = $dbdir
 
 }

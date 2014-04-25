@@ -25,6 +25,10 @@ restart () {
   [ $RETVAL -eq 0 ]
 }
 
+status () {
+  exit 1;
+}
+
 RETVAL=0
 
 case "$1" in
@@ -41,7 +45,7 @@ case "$1" in
     restart
     ;;
   status)
-    start
+    status
     ;;
   *)
     echo "This script is no longer used.  Please refer to /etc/init.d/mongod_* scripts"

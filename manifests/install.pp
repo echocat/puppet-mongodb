@@ -1,12 +1,30 @@
 # == Class: mongodb::install
 #
 #
-class mongodb::install {
+class mongodb::install (
+  $package_ensure = 'installed',
+  $repo_manage    = true,
+  $package_version = undef
+) {
 
     anchor { 'mongodb::install::begin': }
     anchor { 'mongodb::install::end': }
 
-    include $::mongodb::params::repo_class
+    if ($repo_manage == true) {
+        include $::mongodb::params::repo_class
+        $mongodb_10gen_package_require = [
+          Anchor['mongodb::install::begin'],
+          Class[$::mongodb::params::repo_class]
+        ]
+    } else {
+        $mongodb_10gen_package_require = [
+          Anchor['mongodb::install::begin']
+        ]
+    }
+    
+    if defined('$package_version') {
+      $package_ensure = "$package_version",
+    }
 
     package { 'mongodb-stable':
         ensure  => absent,
@@ -16,9 +34,9 @@ class mongodb::install {
     }
 
     package { 'mongodb-10gen':
-        ensure  => installed,
+        ensure  => $package_ensure,
         name    => $::mongodb::params::server_pkg_name,
-        require => [Anchor['mongodb::install::begin'],Class[$::mongodb::params::repo_class]],
+        require => $mongodb_10gen_package_require,
         before  => Anchor['mongodb::install::end']
     }
 

@@ -4,12 +4,13 @@ define mongodb::mongos (
     $mongos_instance = $name,
     $mongos_bind_ip = '',
     $mongos_port = 27017,
+    $mongos_service_manage = true,
     $mongos_enable = true,
     $mongos_running = true,
     $mongos_logappend = true,
     $mongos_fork = true,
     $mongos_useauth = false,
-    $mongos_add_options = ''
+    $mongos_add_options = []
 ) {
     file {
         "/etc/mongos_${mongos_instance}.conf":
@@ -32,21 +33,24 @@ define mongodb::mongos (
             content => template('mongodb/mongos.key.erb'),
             mode    => '0700',
             owner   => $mongodb::params::run_as_user,
+            require => Class['mongodb::install'],
             notify  => Service["mongos_${mongos_instance}"],
         }
     }
 
-    service {
-        "mongos_${mongos_instance}":
-            ensure     => $mongos_running,
-            enable     => $mongos_enable,
-            hasstatus  => true,
-            hasrestart => true,
-            require    => [
-                File["/etc/mongos_${mongos_instance}.conf", "/etc/init.d/mongos_${mongos_instance}"],
-                Service[$::mongodb::params::old_servicename]
-                ],
-                before => Anchor['mongodb::end']
+    if ($mongos_service_manage == true){
+        service {
+            "mongos_${mongos_instance}":
+                ensure     => $mongos_running,
+                enable     => $mongos_enable,
+                hasstatus  => true,
+                hasrestart => true,
+                require    => [
+                    File["/etc/mongos_${mongos_instance}.conf", "/etc/init.d/mongos_${mongos_instance}"],
+                    Service[$::mongodb::params::old_servicename]
+                    ],
+                    before => Anchor['mongodb::end']
+        }
     }
 }
 
