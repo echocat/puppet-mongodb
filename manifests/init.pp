@@ -31,7 +31,6 @@ class mongodb (
         /(?i)(Debian|RedHat)/: {
             class {
                 'mongodb::install':
-                    package_ensure => $package_ensure,
                     repo_manage    => $repo_manage
             }
         }
