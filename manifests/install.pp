@@ -23,7 +23,7 @@ class mongodb::install (
     }
     
     if defined('$package_version') {
-      package_ensure => "$package_version",
+      $package_ensure = "$package_version",
     }
 
     package { 'mongodb-stable':
