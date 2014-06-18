@@ -7,6 +7,7 @@
 3. [Setup - The basics of getting started with mongodb](#setup)
     * [Beginning with mongodb - Installation](#beginning-with-mongodb)
     * [Install MongoDB version 2.6 - Installation](#install-mongodb-version-26)
+    * [Install exact version - Installation](#install-exact-version)
     * [Configure MongoDB wit run as user](#configure-mongodb-with-run-as-user)
     * [Configure MongoDB cluster](#configuration-mongodb-cluster)
 4. [Usage - The class and defined types available for configuration](#usage)
@@ -66,6 +67,27 @@ Starting with a mongodb server with replSet. This will install a 2.4.x version M
       mongod_replSet     => 'mongoShard1',
       mongod_add_options => ['slowms = 50']
   }
+```
+
+###Install exact version
+
+Holy shit, I work in an enterprise environment. I need an specific version.
+So on a RHEL like system it would look like this:
+
+```puppet
+
+  # mongodb 2.6.x
+  class { 'mongodb':
+    package_name   => 'mongodb-org',
+    package_ensure => '2.6.2-1',
+    logdir         => '/var/log/mongodb/'
+  }
+  
+  # mongodb 2.4.x
+  class { 'mongodb':
+    package_ensure => '2.4.10-mongodb_1',
+    logdir         => '/var/log/mongodb/'
+  }  
 ```
 
 ###Configure MongoDB with run as user
