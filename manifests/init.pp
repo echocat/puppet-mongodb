@@ -7,6 +7,7 @@ class mongodb (
   $logrotatenumber          = $mongodb::params::logrotatenumber,
   $logrotate_package_manage = $mongodb::params::logrotate_package_manage,
   $package_ensure           = $mongodb::params::package_ensure,
+  $package_name             = $mongodb::params::mongodb_pkg_name,
   $repo_manage              = $mongodb::params::repo_manage,
   $ulimit_nofiles           = $mongodb::params::ulimit_nofiles,
   $ulimit_nproc             = $mongodb::params::ulimit_nproc,

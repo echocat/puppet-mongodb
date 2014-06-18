@@ -6,6 +6,7 @@
 2. [Module Description - What does this module do?](#module-description)
 3. [Setup - The basics of getting started with mongodb](#setup)
     * [Beginning with mongodb - Installation](#beginning-with-mongodb)
+    * [Install MongoDB version 2.6 - Installation](#install-mongodb-version-26)
     * [Configure MongoDB wit run as user](#configure-mongodb-with-run-as-user)
     * [Configure MongoDB cluster](#configuration-mongodb-cluster)
 4. [Usage - The class and defined types available for configuration](#usage)
@@ -20,6 +21,8 @@
 ##Overview
 
 This module installs and makes basic configs for mongodb. That includes mongod and mongos.
+Out-of-the-box the defaults are set to install a mongodb version 2.4.x. If you want to use
+2.6 see the setup examples below.
 
 ##Module Description
 
@@ -38,7 +41,7 @@ This module can be used to set up a simple standalone DB or all components for a
 
 ###Beginning with MongoDB
 
-Starting with a mongodb server with replSet:
+Starting with a mongodb server with replSet. This will install a 2.4.x version MongoDB:
 
 ```puppet
   include mongodb
@@ -46,7 +49,22 @@ Starting with a mongodb server with replSet:
     'my_mongod_instanceX':
       mongod_instance    => 'mongodb1',
       mongod_replSet     => 'mongoShard1',
-      mongod_add_options => ['fastsync','slowms = 50']
+      mongod_add_options => ['slowms = 50']
+  }
+```
+
+###Install MongoDB version 2.6
+
+```puppet
+  class { 'mongodb':
+    package_name  => 'mongodb-org',
+    logdir       => '/var/log/mongodb/'
+  }
+  mongodb::mongod {
+    'my_mongod_instanceX':
+      mongod_instance    => 'mongodb1',
+      mongod_replSet     => 'mongoShard1',
+      mongod_add_options => ['slowms = 50']
   }
 ```
 

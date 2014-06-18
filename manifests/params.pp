@@ -7,14 +7,9 @@ class mongodb::params {
         debian => 'mongodb::repos::apt',
     }
 
-    $server_pkg_name = $::osfamily ? {
-        debian  => 'mongodb-10gen',
-        redhat  => 'mongo-10gen-server',
-    }
-
     $mongodb_pkg_name = $::osfamily ? {
         debian  => 'mongodb-10gen',
-        redhat  => 'mongo-10gen',
+        redhat  => 'mongo-10gen-server',
     }
 
     $old_server_pkg_name = $::osfamily ? {

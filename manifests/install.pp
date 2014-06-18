@@ -39,17 +39,9 @@ class mongodb::install (
 
     package { 'mongodb-10gen':
         ensure  => $package_ensure,
-        name    => $::mongodb::params::mongodb_pkg_name,
+        name    => $::mongodb::package_name,
         require => $mongodb_10gen_package_require,
         before  => Anchor['mongodb::install::end']
     }
 
-  if ($::osfamily == 'redhat') {
-    package { 'mongodb-10gen-server':
-        ensure  => $package_ensure,
-        name    => $::mongodb::params::server_pkg_name,
-        require => $mongodb_10gen_package_require,
-        before  => Anchor['mongodb::install::end']
-    }
-  }
 }
