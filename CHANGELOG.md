@@ -1,3 +1,16 @@
+## 2014-06-23 - 3.4.0
+
+#### Features:
+
+- specify `package_name` and `package_ensure` to install specific version
+- new README examples for version 2.6.x
+
+#### Bugfixes:
+
+- Debian init script uses pidfile correct
+- fix package naming on Debian-like systems
+- package names are version 2.6.x compatiple now
+
 ## 2014-04-22 - 3.3.1
 
 - set ulimit nproc (number of processes) to recommend value 32k (was 1024)
