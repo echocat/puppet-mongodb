@@ -59,7 +59,9 @@ Starting with a mongodb server with replSet. This will install a 2.4.x version M
 ```puppet
   class { 'mongodb':
     package_name  => 'mongodb-org',
-    logdir       => '/var/log/mongodb/'
+    logdir       => '/var/log/mongodb/',
+    # only debian like distros
+    old_servicename => 'mongod'
   }
   mongodb::mongod {
     'my_mongod_instanceX':
@@ -80,7 +82,9 @@ So on a RHEL like system it would look like this:
   class { 'mongodb':
     package_name   => 'mongodb-org',
     package_ensure => '2.6.2-1',
-    logdir         => '/var/log/mongodb/'
+    logdir         => '/var/log/mongodb/',
+    # only debian like distros
+    old_servicename => 'mongod'
   }
   
   # mongodb 2.4.x
