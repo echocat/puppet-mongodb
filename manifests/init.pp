@@ -23,7 +23,7 @@ class mongodb (
     anchor { 'mongodb::end': }
 
     class { 'mongodb::logrotate':
-        package_manage => $logrotate_package_manage,
+        package_manage => $::mongodb::logrotate_package_manage,
         require        => Anchor['mongodb::install::end'],
         before         => Anchor['mongodb::end'],
     }
@@ -43,7 +43,7 @@ class mongodb (
     # stop and disable default mongod
 
     service {
-        [$::mongodb::params::old_servicename]:
+        [$::mongodb::old_servicename]:
             ensure     => stopped,
             enable     => false,
             hasstatus  => true,
@@ -56,10 +56,10 @@ class mongodb (
     # instances and not only the default mongod
 
     file {
-        "/etc/init.d/${::mongodb::params::old_servicename}":
+        "/etc/init.d/${::mongodb::old_servicename}":
             ensure  => file,
             content => template("${module_name}/replacement_mongod-init.conf.erb"),
-            require => Service[$::mongodb::params::old_servicename],
+            require => Service[$::mongodb::old_servicename],
             mode    => '0755',
             before  => Anchor['mongodb::end'],
     }
@@ -68,19 +68,19 @@ class mongodb (
     'mongod-nofile-soft':
       type  => soft,
       item  => nofile,
-      value => $mongodb::params::ulimit_nofiles;
+      value => $::mongodb::ulimit_nofiles;
     'mongod-nofile-hard':
       type  => hard,
       item  => nofile,
-      value => $mongodb::params::ulimit_nofiles;
+      value => $::mongodb::ulimit_nofiles;
     'mongod-nproc-soft':
       type  => soft,
       item  => nproc,
-      value => $mongodb::params::ulimit_nproc;
+      value => $::mongodb::ulimit_nproc;
     'mongod-nproc-hard':
       type  => hard,
       item  => nproc,
-      value => $mongodb::params::ulimit_nproc;
+      value => $::mongodb::ulimit_nproc;
   }
 
 }
