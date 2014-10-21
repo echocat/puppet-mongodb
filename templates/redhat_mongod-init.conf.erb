@@ -71,7 +71,11 @@ restart () {
         start
 }
 
+ulimit -f unlimited
+ulimit -t unlimited
+ulimit -v unlimited
 ulimit -n <%= scope.lookupvar('mongodb::ulimit_nofiles') %>
+ulimit -m unlimited
 ulimit -u <%= scope.lookupvar('mongodb::ulimit_nproc') %>
 
 RETVAL=0
