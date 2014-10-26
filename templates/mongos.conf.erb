@@ -2,25 +2,18 @@
 # mongos.conf
 
 pidfilepath=<%= scope.lookupvar('mongodb::pidfilepath') %>/mongos_<%= @mongos_instance %>/mongos.pid
-
 logpath=<%= scope.lookupvar('mongodb::logdir') %>/mongos_<%= @mongos_instance %>.log
-
 logappend=<%= @mongos_logappend %>
 
 fork = <%= @mongos_fork %>
-
-<% if @mongos_bind_ip != "" %>
+<%- if @mongos_bind_ip != "" -%>
 bind_ip=<%= @mongos_bind_ip %>
-<% end %>
-
+<%- end -%>
 port = <%= @mongos_port %>
-
 configdb = <%= @mongos_configServers %>
-
-<% @mongos_add_options.each do |addoption| %>
+<%- @mongos_add_options.each do |addoption| -%>
 <%= addoption %>
-<% end %>
-
-<% if @mongos_useauth != false -%>
+<%- end -%>
+<%- if @mongos_useauth != false -%>
 keyFile = /etc/mongos_<%= @mongos_instance %>.key
-<% end -%>
+<%- end -%>
