@@ -1,3 +1,15 @@
+## 2014-11-08 - 3.4.1
+
+#### Features:
+
+- set some more ulimits default
+- cleanup newlines and whitespaces
+
+#### Bugfixes:
+
+- fix absolute variable path from params.pp
+- Debian: remove --make-pidfile , because mongod sets pidfile itself
+
 ## 2014-06-23 - 3.4.0
 
 #### Features:
