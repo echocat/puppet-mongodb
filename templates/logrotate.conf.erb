@@ -15,8 +15,8 @@
 	create 0640 <%= scope.lookupvar('mongodb::run_as_user') -%> <%= scope.lookupvar('mongodb::run_as_group') %>
 	sharedscripts
 	postrotate
-		killall -SIGUSR1 mongod
-		killall -SIGUSR1 mongos
+		killall -SIGUSR1 mongod || true
+		killall -SIGUSR1 mongos || true
 		find <%= scope.lookupvar('mongodb::logdir') %> -type f -regex ".*\.\(log.[0-9].*-[0-9].*\)" -exec rm {} \;
 	endscript
 }
