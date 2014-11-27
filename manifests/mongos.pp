@@ -32,7 +32,7 @@ define mongodb::mongos (
     file { "/etc/mongos_${mongos_instance}.key":
       content => template('mongodb/mongos.key.erb'),
       mode    => '0700',
-      owner   => $mongodb::params::run_as_user,
+      owner   => $::mongodb::run_as_user,
       require => Class['mongodb::install'],
       notify  => Service["mongos_${mongos_instance}"],
     }
