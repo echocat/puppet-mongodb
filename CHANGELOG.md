@@ -1,3 +1,11 @@
+## 2014-12-11 - 3.4.3 (Bugfix release)
+
+#### Bugfixes:
+
+- puppet-lint to match "approved" requirements
+- add first spec tests
+- fail on unsupported OS
+
 ## 2014-12-02 - 3.4.2 (Bugfix release)
 
 #### Bugfixes:
