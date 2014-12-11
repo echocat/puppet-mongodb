@@ -13,7 +13,7 @@ describe 'mongodb' do
   end
 
   context 'with defaults for all parameters on Debian' do
-    let(:facts) {{ :osfamily => 'Debian' }}
+    let(:facts) {{ :osfamily => 'Debian', :lsbdistid => 'ubuntu' }}
     it { should contain_class('mongodb') }
   end
 
