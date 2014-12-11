@@ -2,35 +2,29 @@
 #
 class mongodb::params {
 
-    $repo_class = $::osfamily ? {
-        redhat => 'mongodb::repos::yum',
-        debian => 'mongodb::repos::apt',
+  case $::osfamily {
+    'Debian': {
+      $repo_class          = 'mongodb::repos::apt'
+      $mongodb_pkg_name    = 'mongodb-10gen'
+      $old_server_pkg_name = 'mongodb-stable'
+      $old_servicename     = 'mongodb'
+      $run_as_user         = 'mongodb'
+      $run_as_group        = 'mongodb'
+      $logdir              = '/var/log/mongodb'
     }
-
-    $mongodb_pkg_name = $::osfamily ? {
-        debian  => 'mongodb-10gen',
-        redhat  => 'mongo-10gen-server',
+    'RedHat': {
+      $repo_class          = 'mongodb::repos::yum'
+      $mongodb_pkg_name    = 'mongo-10gen-server'
+      $old_server_pkg_name = 'mongodb-server'
+      $old_servicename     = 'mongod'
+      $run_as_user         = 'mongod'
+      $run_as_group        = 'mongod'
+      $logdir              = '/var/log/mongo'
     }
-
-    $old_server_pkg_name = $::osfamily ? {
-        debian  => 'mongodb-stable',
-        redhat  => 'mongodb-server',
+    default: {
+      fail("Unsupported OS ${::osfamily}")
     }
-
-    $old_servicename = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
-    }
-
-    $run_as_user = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
-    }
-
-    $run_as_group = $::osfamily ? {
-        debian  => 'mongodb',
-        redhat  => 'mongod',
-    }
+  }
 
     # directorypath to store db directory in
     # subdirectories for each mongo instance will be created
@@ -52,13 +46,6 @@ class mongodb::params {
     # should this module manage the logrotate package?
 
     $logrotate_package_manage = true
-
-    # directory for mongo logfiles
-
-    $logdir = $::osfamily ? {
-        debian  => '/var/log/mongodb',
-        redhat  => '/var/log/mongo',
-    }
 
     # specify ulimit - nofile = 64000 and nproc = 32000 is recommended setting from
     # http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
