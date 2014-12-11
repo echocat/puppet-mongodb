@@ -43,7 +43,7 @@ class mongodb (
     # stop and disable default mongod
 
     service {
-        "${::mongodb::old_servicename}":
+        $::mongodb::old_servicename:
             ensure     => stopped,
             enable     => false,
             hasstatus  => true,

@@ -25,8 +25,8 @@ class mongodb::install (
       $package_ensure = $::mongodb::package_ensure
     } else {
       $package_ensure = $::osfamily ? {
-        redhat => "$package_version-mongodb_1",
-        debian => "$package_version",
+        redhat => "${package_version}-mongodb_1",
+        debian => $package_version,
       }
     }
 
