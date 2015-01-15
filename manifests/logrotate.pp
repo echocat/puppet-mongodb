@@ -23,7 +23,7 @@ class mongodb::logrotate {
     ifempty       => false,
     postrotate    => "  killall -SIGUSR1 mongod || true
       killall -SIGUSR1 mongos || true
-      find ${::mongodb::logdir} -type f -regex '.*\.\(log.[0-9].*-[0-9].*\)' -exec rm {} \;",
+      find ${::mongodb::logdir} -type f -regex '.*\\.\\(log.[0-9].*-[0-9].*\\)' -exec rm {} \\;",
     require       => [Class['mongodb::install'], Class['mongodb::params']],
     before        => Anchor['mongodb::logrotate::end']
   }

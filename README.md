@@ -25,6 +25,8 @@ This module installs and makes basic configs for mongodb. That includes mongod a
 Out-of-the-box the defaults are set to install a mongodb version 2.4.x. If you want to use
 2.6 see the setup examples below.
 
+Github Master: [![Build Status](https://secure.travis-ci.org/echocat/puppet-mongodb.png?branch=master)](https://travis-ci.org/echocat/puppet-mongodb)
+
 ##Module Description
 
 [MongoDB](http://www.mongodb.org/), is an open-source document database, and the leading NoSQL database.
