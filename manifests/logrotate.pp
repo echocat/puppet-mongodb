@@ -3,28 +3,28 @@
 # This module manages mongodb services.
 # It provides the functions for mongod and mongos instances.
 #
-class mongodb::logrotate (
-  $package_manage = true
-) {
+class mongodb::logrotate {
 
-    anchor { 'mongodb::logrotate::begin': }
-    anchor { 'mongodb::logrotate::end': }
+  anchor { 'mongodb::logrotate::begin': }
+  anchor { 'mongodb::logrotate::end': }
 
-    if ($package_manage == true) {
-        package {
-            'logrotate':
-                ensure => installed;
-        }
-    }
-
-    file {
-        '/etc/logrotate.d/mongodb':
-            content    => template('mongodb/logrotate.conf.erb'),
-            require    => [
-                Package['logrotate'],
-                Class['mongodb::install'],
-                Class['mongodb::params']
-                ],
-                before => Anchor['mongodb::logrotate::end']
-    }
+  logrotate::rule { 'mongodb':
+    path          => "${::mongodb::logdir}/*.log",
+    rotate        => $::mongodb::logrotatenumber,
+    rotate_every  => 'day',
+    compress      => true,
+    delaycompress => true,
+    sharedscripts => true,
+    create        => true,
+    create_mode   => '0640',
+    create_owner  => $::mongodb::run_as_user,
+    create_group  => $::mongodb::run_as_group,
+    missingok     => true,
+    ifempty       => false,
+    postrotate    => "  killall -SIGUSR1 mongod || true
+      killall -SIGUSR1 mongos || true
+      find ${::mongodb::logdir} -type f -regex '.*\.\(log.[0-9].*-[0-9].*\)' -exec rm {} \;",
+    require       => [Class['mongodb::install'], Class['mongodb::params']],
+    before        => Anchor['mongodb::logrotate::end']
+  }
 }

@@ -221,10 +221,6 @@ Default on Redhat '/var/log/mongo' and on Debian '/var/log/mongodb'.
 
 Number of days to keep the logfiles.
 
-#####`logrotate_package_manage`
-
-Default is true (boolean). Says if this module should manage logrotate or not.
-
 #####`package_ensure`
 
 Default is 'installed' . Here you can choose the version to be installed.
@@ -378,12 +374,13 @@ Array. Each field is "key" or "key=value" for parameters for config file
 ###Modules needed:
 
 * puppetlabs-stdlib
+* rodjek-logrotate
 * puppetlabs-apt ( only for Debian/Ubuntu )
 
 ###Software versions needed:
 
-facter > 1.6.2
-puppet > 2.6.2
+* facter > 1.6.2
+* puppet > 2.6.2
 
 On Redhat distributions you need the EPEL or RPMforge repository, because Graphite needs packages, which are not part of the default repos.
 

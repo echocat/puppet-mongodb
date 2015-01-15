@@ -23,7 +23,6 @@ class mongodb (
     anchor { 'mongodb::end': }
 
     class { 'mongodb::logrotate':
-        package_manage => $::mongodb::logrotate_package_manage,
         require        => Anchor['mongodb::install::end'],
         before         => Anchor['mongodb::end'],
     }

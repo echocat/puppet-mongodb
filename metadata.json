@@ -27,7 +27,7 @@
     }
   ],
   "name": "dwerder-mongodb",
-  "version": "3.4.3",
+  "version": "3.5.0",
   "source": "git clone https://github.com/echocat/puppet-mongodb.git",
   "author": "echocat / Daniel Werdermann",
   "license": "Apache-2.0",
@@ -35,13 +35,8 @@
   "project_page": "https://github.com/echocat/puppet-mongodb",
   "issues_url": "https://github.com/echocat/puppet-mongodb/issues",
   "dependencies": [
-    {
-      "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 2.2.1"
-    },
-    {
-      "name": "puppetlabs/apt",
-      "version_requirement": ">= 1.1.0"
-    }
+    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0"},
+    {"name":"puppetlabs/apt","version_requirement":">= 1.1.0"},
+    {"name":"rodjek/logrotate","version_requirement":">= 1.1.1"}
   ]
 }

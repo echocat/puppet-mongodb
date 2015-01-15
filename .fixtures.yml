@@ -2,5 +2,8 @@ fixtures:
   repositories:
     stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
     apt: "git://github.com/puppetlabs/puppetlabs-apt.git"
+    logrotate:
+      repo: "git://github.com/rodjek/puppet-logrotate.git"
+      ref: "1.1.1"
   symlinks:
     mongodb: "#{source_dir}"
