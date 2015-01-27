@@ -19,7 +19,7 @@ class mongodb::params {
       $old_servicename     = 'mongod'
       $run_as_user         = 'mongod'
       $run_as_group        = 'mongod'
-      $logdir              = '/var/log/mongo'
+      $logdir              = '/var/log/mongodb'
     }
     default: {
       fail("Unsupported OS ${::osfamily}")
