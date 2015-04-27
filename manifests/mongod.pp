@@ -1,20 +1,21 @@
 # == definition mongodb::mongod
 define mongodb::mongod (
-  $mongod_instance    = $name,
-  $mongod_bind_ip     = '',
-  $mongod_port        = 27017,
-  $mongod_replSet     = '',
-  $mongod_enable      = true,
-  $mongod_running     = true,
-  $mongod_configsvr   = false,
-  $mongod_shardsvr    = false,
-  $mongod_logappend   = true,
-  $mongod_rest        = true,
-  $mongod_fork        = true,
-  $mongod_auth        = false,
-  $mongod_useauth     = false,
-  $mongod_monit       = false,
-  $mongod_add_options = []
+  $mongod_instance                        = $name,
+  $mongod_bind_ip                         = '',
+  $mongod_port                            = 27017,
+  $mongod_replSet                         = '',
+  $mongod_enable                          = true,
+  $mongod_running                         = true,
+  $mongod_configsvr                       = false,
+  $mongod_shardsvr                        = false,
+  $mongod_logappend                       = true,
+  $mongod_rest                            = true,
+  $mongod_fork                            = true,
+  $mongod_auth                            = false,
+  $mongod_useauth                         = false,
+  $mongod_monit                           = false,
+  $mongod_add_options                     = [],
+  $mongod_deactivate_transparent_hugepage = false,
 ) {
 
   file {
