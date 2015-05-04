@@ -60,6 +60,11 @@ DBPATH=`awk -F= '/^dbpath=/{print $2}' "$CONF"`
 PIDFILE=<%= scope.lookupvar('mongodb::pidfilepath') %>/mongod_<%= @mongod_instance %>/mongod.pid
 ENABLE_MONGODB=yes
 
+# Include mongod intance defaults if available
+if [ -f /etc/default/$NAME ] ; then
+    . /etc/default/$NAME
+fi
+
 # Handle NUMA access to CPUs (SERVER-3574)
 # This verifies the existence of numactl as well as testing that the command works
 NUMACTL_ARGS="--interleave=all"
