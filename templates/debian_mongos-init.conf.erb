@@ -58,14 +58,19 @@ NAME=mongodb_<%= @mongos_instance %>
 CONF="/etc/mongos_<%= @mongos_instance %>.conf"
 PIDFILE=`awk -F= '/^pidfilepath=/{print $2}' "$CONF"`
 DBPATH=`dirname $PIDFILE`
-ENABLE_MONGODB=yes
+ENABLE_MONGOS=yes
+
+# Include mongos intance defaults if available
+if [ -f /etc/default/$NAME ] ; then
+    . /etc/default/$NAME
+fi
 
 if test ! -x $DAEMON; then
     echo "Could not find $DAEMON"
     exit 0
 fi
 
-if test "x$ENABLE_MONGODB" != "xyes"; then
+if test "x$ENABLE_MONGOS" != "xyes"; then
     exit 0
 fi
 
