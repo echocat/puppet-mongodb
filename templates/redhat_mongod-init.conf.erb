@@ -45,6 +45,15 @@ start()
   echo -n $"Starting mongod_<%= @mongod_instance %>: "
   mkdir -p $DBPATH || exit 5
   chown -R ${MONGO_USER}:${MONGO_GROUP} $DBPATH
+  <% if @mongod_deactivate_transparent_hugepage -%>
+  # implement mdiag.sh best-practice
+  test -f /sys/kernel/mm/transparent_hugepage/khugepaged/defrag \
+  && echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
+  test -f /sys/kernel/mm/transparent_hugepage/defrag \
+  && echo never > /sys/kernel/mm/transparent_hugepage/defrag
+  test -f /sys/kernel/mm/transparent_hugepage/enabled \
+  && echo never > /sys/kernel/mm/transparent_hugepage/enabled
+  <% end -%>
   if [ "$DBPATH" != "$PIDPATH" ]
   then
     mkdir -p $PIDPATH || exit 5

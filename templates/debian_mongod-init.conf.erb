@@ -121,6 +121,15 @@ running() {
 start_server() {
   mkdir -p $DBPATH || exit 5
   chown -R ${DAEMONUSER}:${DAEMONGROUP} $DBPATH
+  <% if @mongod_deactivate_transparent_hugepage -%>
+  # implement mdiag.sh best-practice
+  test -f /sys/kernel/mm/transparent_hugepage/khugepaged/defrag \
+  && echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
+  test -f /sys/kernel/mm/transparent_hugepage/defrag \
+  && echo never > /sys/kernel/mm/transparent_hugepage/defrag
+  test -f /sys/kernel/mm/transparent_hugepage/enabled \
+  && echo never > /sys/kernel/mm/transparent_hugepage/enabled
+  <% end -%>
 # Start the process using the wrapper
             start-stop-daemon --background --start --quiet --pidfile $PIDFILE \
                         --chuid $DAEMONUSER \
