@@ -18,6 +18,8 @@ define mongodb::mongod (
   $mongod_deactivate_transparent_hugepage = false,
 ) {
 
+# lint:ignore:selector_inside_resource  would not add much to readability
+
   file {
     "/etc/mongod_${mongod_instance}.conf":
       content => template('mongodb/mongod.conf.erb'),
@@ -34,6 +36,8 @@ define mongodb::mongod (
       mode    => '0755',
       require => Class['mongodb::install'],
   }
+
+# lint:endignore
 
   if ($mongod_monit != false) {
     # notify { "mongod_monit is : ${mongod_monit}": }
