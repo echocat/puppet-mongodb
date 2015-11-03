@@ -19,11 +19,6 @@ class mongodb (
   anchor { 'mongodb::begin': before => Anchor['mongodb::install::begin'], }
   anchor { 'mongodb::end': }
 
-  class { 'mongodb::logrotate':
-    require => Anchor['mongodb::install::end'],
-    before  => Anchor['mongodb::end'],
-  }
-
   case $::osfamily {
     /(?i)(Debian|RedHat)/ : {
       class { 'mongodb::install': repo_manage => $repo_manage }
@@ -31,6 +26,11 @@ class mongodb (
     default               : {
       fail "Unsupported OS ${::operatingsystem} in 'mongodb' module"
     }
+  }
+
+  class { 'mongodb::logrotate':
+    require => Anchor['mongodb::install::end'],
+    before  => Anchor['mongodb::end'],
   }
 
   # stop and disable default mongod
