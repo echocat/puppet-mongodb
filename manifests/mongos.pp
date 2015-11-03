@@ -13,6 +13,8 @@ define mongodb::mongos (
   $mongos_add_options    = []
 ) {
 
+# lint:ignore:selector_inside_resource  would not add much to readability
+
   file {
     "/etc/mongos_${mongos_instance}.conf":
       content => template('mongodb/mongos.conf.erb'),
@@ -29,6 +31,8 @@ define mongodb::mongos (
       mode    => '0755',
       require => Class['mongodb::install'],
   }
+
+# lint:endignore
 
   if ($mongos_useauth != false) {
     file { "/etc/mongos_${mongos_instance}.key":
