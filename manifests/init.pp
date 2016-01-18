@@ -40,7 +40,7 @@ class mongodb (
     enable     => false,
     hasstatus  => true,
     hasrestart => true,
-    subscribe  => Package['mongodb-10gen'],
+    subscribe  => Package['mongodb-package'],
     before     => Anchor['mongodb::end'],
   }
 
@@ -78,4 +78,3 @@ class mongodb (
   }
 
 }
-
