@@ -1,3 +1,11 @@
+## 2016-01-18 - 3.5.0 (Feature release)
+
+#### Features:
+
+- add parameter `mongod_deactivate_transparent_hugepage` for mongod
+- use of module rodjek/logrotate instead of own logrotate functions
+- add repos for debain and mongo 3.x versions
+
 ## 2014-12-11 - 3.4.3 (Bugfix release)
 
 #### Bugfixes:
