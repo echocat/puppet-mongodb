@@ -77,4 +77,7 @@ class mongodb (
       value => $::mongodb::ulimit_nproc;
   }
 
+  # ordering resources application
+
+  Mongod<| |> -> Mongos<| |>
 }
