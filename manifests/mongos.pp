@@ -15,6 +15,11 @@ define mongodb::mongos (
 
 # lint:ignore:selector_inside_resource  would not add much to readability
 
+  $init_template = $::osfamily ? {
+    Debian => template('mongodb/debian_mongos-init.conf.erb'),
+    RedHat => template('mongodb/redhat_mongos-init.conf.erb'),
+  }
+
   file {
     "/etc/mongos_${mongos_instance}.conf":
       content => template('mongodb/mongos.conf.erb'),
@@ -24,15 +29,19 @@ define mongodb::mongos (
       require => Class['mongodb::install'];
 
     "/etc/init.d/mongos_${mongos_instance}":
-      content => $::osfamily ? {
-        Debian => template('mongodb/debian_mongos-init.conf.erb'),
-        RedHat => template('mongodb/redhat_mongos-init.conf.erb'),
-      },
+      content => $init_template,
       mode    => '0755',
       require => Class['mongodb::install'],
   }
 
-# lint:endignore
+  # wait for servers starting
+
+  start_detector { 'configservers':
+    ensure  => present,
+    timeout => 120,
+    servers => $mongos_configServers,
+    policy  => one
+  }
 
   if ($mongos_useauth != false) {
     file { "/etc/mongos_${mongos_instance}.key":
@@ -53,7 +62,8 @@ define mongodb::mongos (
       require    => [
         File["/etc/mongos_${mongos_instance}.conf"],
         File["/etc/init.d/mongos_${mongos_instance}"],
-        Service[$::mongodb::old_servicename]],
+        Service[$::mongodb::old_servicename],
+        Start_detector['configservers']],
       before     => Anchor['mongodb::end']
     }
   }
