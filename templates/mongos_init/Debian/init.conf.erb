@@ -71,7 +71,7 @@ fi
 
 . /lib/lsb/init-functions
 
-STARTTIME=1
+STARTTIME=<%= @mongos_starttime %>
 DIETIME=10                   # Time to wait for the server to die, in seconds
                             # If this value is set too low you might not
                             # let some servers to die gracefully and

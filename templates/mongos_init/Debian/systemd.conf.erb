@@ -1,0 +1,15 @@
+[Unit]
+Description=Mongos_<%= @mongos_instance %> server
+SourcePath=/etc/init.d/mongos_<%= @mongos_instance %>
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= scope.lookupvar('mongodb::pidfilepath') %>/mongos_<%= @mongos_instance %>/mongos.pid
+ExecStart=/etc/init.d/mongos_<%= @mongos_instance %> start
+ExecReload=/etc/init.d/mongos_<%= @mongos_instance %> reload
+ExecStop=/etc/init.d/mongos_<%= @mongos_instance %> stop
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

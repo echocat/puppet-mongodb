@@ -15,7 +15,7 @@ define mongodb::mongod (
   $mongod_useauth                         = false,
   $mongod_monit                           = false,
   $mongod_add_options                     = [],
-  $mongod_deactivate_transparent_hugepage = false,
+  $mongod_deactivate_transparent_hugepage = false
 ) {
 
 # lint:ignore:selector_inside_resource  would not add much to readability
@@ -24,17 +24,32 @@ define mongodb::mongod (
     "/etc/mongod_${mongod_instance}.conf":
       content => template('mongodb/mongod.conf.erb'),
       mode    => '0755',
-      # no auto restart of a db because of a config change
-      # notify => Class['mongodb::service'],
       require => Class['mongodb::install'];
-
     "/etc/init.d/mongod_${mongod_instance}":
-      content => $::osfamily ? {
-        debian => template('mongodb/debian_mongod-init.conf.erb'),
-        redhat => template('mongodb/redhat_mongod-init.conf.erb'),
-      },
+      content => template("mongodb/mongod_init/${::osfamily}/init.conf.erb"),
       mode    => '0755',
-      require => Class['mongodb::install'],
+      require => Class['mongodb::install'];
+  }
+
+  if ($::osfamily == 'Debian' and $::operatingsystemmajrelease == 8) {
+    file { "mongod_${mongod_instance}_systemd_service":
+        path => "/lib/systemd/system/mongod_${mongod_instance}.service",
+        content => template("mongodb/mongod_init/${::osfamily}/systemd.conf.erb"),
+        mode    => '0644',
+        before  => Exec["systemctl_${mongod_instance}_reload"],
+        require => [
+          Class['mongodb::install'],
+          File["/etc/init.d/mongod_${mongod_instance}"]
+      ];
+    }
+
+    # ensure daemon-reload has been done before service start
+
+    exec { "systemctl_${mongod_instance}_reload":
+      command => 'systemctl daemon-reload',
+      path    => '/bin',
+      before  => Service["mongod_${mongod_instance}"],
+    }
   }
 
 # lint:endignore
@@ -64,11 +79,12 @@ define mongodb::mongod (
     enable     => $mongod_enable,
     hasstatus  => true,
     hasrestart => true,
+    provider   => $::mongod_service_provider,
     require    => [
       File[
         "/etc/mongod_${mongod_instance}.conf",
         "/etc/init.d/mongod_${mongod_instance}"],
-      Service[$::mongodb::old_servicename]],
+        Service[$::mongodb::old_servicename]],
     before     => Anchor['mongodb::end']
   }
 
