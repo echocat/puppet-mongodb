@@ -28,7 +28,7 @@
   ],
   "name": "dwerder-mongodb",
   "version": "3.5.0",
-  "source": "git clone https://github.com/echocat/puppet-mongodb.git",
+  "source": "https://github.com/echocat/puppet-mongodb.git",
   "author": "echocat / Daniel Werdermann",
   "license": "Apache-2.0",
   "summary": "MongoDB module with sharding",
