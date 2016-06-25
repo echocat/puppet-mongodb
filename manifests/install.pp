@@ -39,7 +39,7 @@ class mongodb::install (
 
     package { 'mongodb-package':
         ensure  => $package_ensure,
-        name    => $::mongodb::repos::apt::package_name,
+        name    => $::mongodb::params::mongodb_pkg_name,
         require => $mongodb_10gen_package_require,
         before  => [Anchor['mongodb::install::end']]
     }
