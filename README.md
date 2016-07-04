@@ -235,12 +235,12 @@ to install the mongodb packages.
 #####`ulimit_nofiles`
 
 Default is 64000 (integer). Number of allowed filehandles.
-See [recommendations](http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings)
+See [recommendations](https://docs.mongodb.com/manual/reference/ulimit/#recommended-ulimit-settings)
 
 #####`ulimit_nproc`
 
-Default is 32000 (integer).
-See [recommendations](http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings)
+Default is 64000 (integer).
+See [recommendations](https://docs.mongodb.com/manual/reference/ulimit/#recommended-ulimit-settings)
 
 #####`run_as_user`
 
