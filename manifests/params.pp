@@ -47,11 +47,11 @@ class mongodb::params {
 
     $logrotate_package_manage = true
 
-    # specify ulimit - nofile = 64000 and nproc = 32000 is recommended setting from
-    # http://docs.mongodb.org/manual/reference/ulimit/#recommended-settings
+    # specify ulimit - nofile = 64000 and nproc = 64000 is recommended setting from
+    # https://docs.mongodb.com/manual/reference/ulimit/#recommended-ulimit-settings
 
     $ulimit_nofiles = 64000
-    $ulimit_nproc   = 32000
+    $ulimit_nproc   = 64000
 
     # specify pidfilepath
 
