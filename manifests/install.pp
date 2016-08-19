@@ -15,10 +15,12 @@ class mongodb::install (
           Anchor['mongodb::install::begin'],
           Class[$::mongodb::params::repo_class]
         ]
+        $package_name = $::mongodb::apt::repos::package_name
     } else {
         $mongodb_10gen_package_require = [
           Anchor['mongodb::install::begin']
         ]
+        $package_name = $::mongodb::package_name
     }
 
     if ($package_version == undef ) {
@@ -39,7 +41,7 @@ class mongodb::install (
 
     package { 'mongodb-package':
         ensure  => $package_ensure,
-        name    => $::mongodb::repos::apt::package_name,
+        name    => $package_name,
         require => $mongodb_10gen_package_require,
         before  => [Anchor['mongodb::install::end']]
     }
