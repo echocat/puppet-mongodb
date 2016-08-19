@@ -16,8 +16,8 @@ define mongodb::mongos (
 # lint:ignore:selector_inside_resource  would not add much to readability
 
   $init_template = $::osfamily ? {
-    Debian => template('mongodb/debian_mongos-init.conf.erb'),
-    RedHat => template('mongodb/redhat_mongos-init.conf.erb'),
+    'debian' => template('mongodb/debian_mongos-init.conf.erb'),
+    'redhat' => template('mongodb/redhat_mongos-init.conf.erb'),
   }
 
   file {

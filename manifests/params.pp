@@ -33,7 +33,7 @@ class mongodb::params {
 
     # numbers of files (days) to keep by logrotate
 
-    $logrotatenumber = 7
+    $logrotatenumber = '7'
 
     # package version / installed / absent
 
