@@ -4,6 +4,7 @@ define mongodb::mongod (
   $mongod_bind_ip     = '',
   $mongod_port        = 27017,
   $mongod_replSet     = '',
+  $mongod_engine     = 'mmapv1',
   $mongod_enable      = true,
   $mongod_running     = true,
   $mongod_configsvr   = false,
