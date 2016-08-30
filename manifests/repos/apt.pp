@@ -25,7 +25,8 @@ class mongodb::repos::apt (
         $repos = 'multiverse'
       }
       default: {
-        fail("Unsupported managed repository for operatingsystem: ${::operatingsystem}, module ${::module_name} currently only supports managing repos for operatingsystem Debian and Ubuntu")
+        fail("Unsupported managed repository for operatingsystem:\
+ ${::operatingsystem}, module ${::module_name} currently only supports managing repos for operatingsystem Debian and Ubuntu")
       }
     }
   } else {

@@ -14,7 +14,7 @@ class mongodb::params {
     }
     'RedHat': {
       $repo_class          = 'mongodb::repos::yum'
-      $mongodb_pkg_name    = 'mongo-10gen-server'
+      $mongodb_pkg_name    = 'mongodb-org'
       $old_server_pkg_name = 'mongodb-server'
       $old_servicename     = 'mongod'
       $run_as_user         = 'mongod'
