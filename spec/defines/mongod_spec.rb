@@ -6,6 +6,9 @@ describe 'mongodb::mongod' , :type => :define do
 
   context 'with defaults for all parameters on RedHat' do
     let(:facts) {{ :osfamily => 'RedHat' }}
+    let :pre_condition do 
+      'include ::mongodb::params'
+    end    
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}
