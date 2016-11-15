@@ -1,20 +1,29 @@
 require 'spec_helper'
 
-describe 'mongodb' do
+describe 'mongodb', :type => 'class' do
 
   context 'Unsupported OS' do
-    let(:facts) {{ :osfamily => 'unsupported' }}
-    it { expect { should contain_class('mongodb')}.to raise_error(Puppet::Error, /Unsupported OS/ )}
+    let(:facts) {{ :osfamily => 'unsupported', :operatingsystem => 'UnknownOS' }}
+    it { is_expected.to raise_error(Puppet::Error,/Unsupported OS/ )}
   end
 
-  context 'with defaults for all parameters on RedHat' do
-    let(:facts) {{ :osfamily => 'RedHat' }}
-    it { should contain_class('mongodb') }
-  end
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+      let :pre_condition do 
+        'include ::mongodb' 
+      end
 
-  context 'with defaults for all parameters on Debian' do
-    let(:facts) {{ :osfamily => 'Debian', :lsbdistid => 'ubuntu' }}
-    it { should contain_class('mongodb') }
+      case facts[:osfamily]
+      when 'Debian' then
+        it { should contain_class('mongodb') }        
+      when 'RedHat' then
+        it { should contain_class('mongodb') }       
+      else
+        it { is_expected.to raise_error(Puppet::Error,/Unsupported OS/ )}
+      end
+    end
   end
-
 end
