@@ -37,11 +37,27 @@ class mongodb::install (
         before  => Anchor['mongodb::install::end']
     }
 
-    package { 'mongodb-package':
+
+  case $::osfamily {
+    'Debian': {
+      package { 'mongodb-package':
         ensure  => $package_ensure,
         name    => $::mongodb::repos::apt::package_name,
         require => $mongodb_10gen_package_require,
         before  => [Anchor['mongodb::install::end']]
+      }
     }
+    'RedHat': {
+      package { 'mongodb-package':
+        ensure  => $package_ensure,
+        name    => $::mongodb::package_name,
+        require => $mongodb_10gen_package_require,
+        before  => [Anchor['mongodb::install::end']]
+      }
+    }
+    default: {
+      fail("Unsupported OS ${::osfamily}")
+    }
+  }
 
 }
