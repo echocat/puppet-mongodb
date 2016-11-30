@@ -16,6 +16,7 @@ define mongodb::mongod (
   $mongod_monit                           = false,
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
+  $mongod_manage_service                  = true,
 ) {
 
 # lint:ignore:selector_inside_resource  would not add much to readability
@@ -55,21 +56,21 @@ define mongodb::mongod (
       mode    => '0700',
       owner   => $mongodb::params::run_as_user,
       require => Class['mongodb::install'],
-      notify  => Service["mongod_${mongod_instance}"],
     }
   }
 
-  service { "mongod_${mongod_instance}":
-    ensure     => $mongod_running,
-    enable     => $mongod_enable,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => [
-      File[
-        "/etc/mongod_${mongod_instance}.conf",
-        "/etc/init.d/mongod_${mongod_instance}"],
-      Service[$::mongodb::old_servicename]],
-    before     => Anchor['mongodb::end']
+  if $mongod_manage_service {
+    service { "mongod_${mongod_instance}":
+      ensure     => $mongod_running,
+      enable     => $mongod_enable,
+      hasstatus  => true,
+      hasrestart => true,
+      require    => [
+        File["/etc/init.d/mongod_${mongod_instance}"],
+        Service[$::mongodb::old_servicename]
+      ],
+      subscribe  => File["/etc/mongod_${mongod_instance}.conf"],
+      before     => Anchor['mongodb::end'],
+    }
   }
-
 }
