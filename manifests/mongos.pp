@@ -15,11 +15,6 @@ define mongodb::mongos (
 
 # lint:ignore:selector_inside_resource  would not add much to readability
 
-  $init_template = $::osfamily ? {
-    debian => template('mongodb/debian_mongos-init.conf.erb'),
-    redhat => template('mongodb/redhat_mongos-init.conf.erb'),
-  }
-
   file {
     "/etc/mongos_${mongos_instance}.conf":
       content => template('mongodb/mongos.conf.erb'),
@@ -29,7 +24,7 @@ define mongodb::mongos (
       require => Class['mongodb::install'];
 
     "/etc/init.d/mongos_${mongos_instance}":
-      content => $init_template,
+      content => template("mongodb/init.d/${::osfamily}_mongos.conf.erb"),
       mode    => '0755',
       require => Class['mongodb::install'],
   }

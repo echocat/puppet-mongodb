@@ -29,10 +29,7 @@ define mongodb::mongod (
       require => Class['mongodb::install'];
 
     "/etc/init.d/mongod_${mongod_instance}":
-      content => $::osfamily ? {
-        debian => template('mongodb/debian_mongod-init.conf.erb'),
-        redhat => template('mongodb/redhat_mongod-init.conf.erb'),
-      },
+      content => template("mongodb/init.d/${::osfamily}_mongod.conf.erb"),
       mode    => '0755',
       require => Class['mongodb::install'],
   }

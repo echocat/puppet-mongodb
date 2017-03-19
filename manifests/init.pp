@@ -49,7 +49,7 @@ class mongodb (
 
   file { "/etc/init.d/${::mongodb::old_servicename}":
     ensure  => file,
-    content => template("${module_name}/replacement_mongod-init.conf.erb"),
+    content => template("${module_name}/init.d/replacement_mongod.conf.erb"),
     require => Service[$::mongodb::old_servicename],
     mode    => '0755',
     before  => Anchor['mongodb::end'],
