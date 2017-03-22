@@ -79,5 +79,5 @@ class mongodb (
 
   # ordering resources application
 
-  Mongod<| |> -> Mongos<| |>
+  Mongodb::Mongod<| |> -> Mongodb::Mongos<| |>
 }
