@@ -33,26 +33,25 @@ class mongodb (
     before  => Anchor['mongodb::end'],
   }
 
-  # stop and disable default mongod
-
-  service { $::mongodb::old_servicename:
-    ensure     => stopped,
-    enable     => false,
-    hasstatus  => true,
-    hasrestart => true,
-    subscribe  => Package['mongodb-package'],
-    before     => Anchor['mongodb::end'],
-  }
-
   # remove not wanted startup script, because it would kill all mongod
   # instances and not only the default mongod
 
   file { "/etc/init.d/${::mongodb::old_servicename}":
     ensure  => file,
     content => template("${module_name}/init.d/replacement_mongod.conf.erb"),
-    require => Service[$::mongodb::old_servicename],
     mode    => '0755',
     before  => Anchor['mongodb::end'],
+  }
+
+  # stop and disable default mongod
+  service { $::mongodb::old_servicename:
+    ensure     => stopped,
+    enable     => false,
+    hasstatus  => true,
+    hasrestart => true,
+    subscribe  => Package['mongodb-package'],
+    require    => File["/etc/init.d/${::mongodb::old_servicename}"],
+    before     => Anchor['mongodb::end'],
   }
 
   mongodb::limits::conf {
