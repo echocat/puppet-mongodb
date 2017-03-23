@@ -376,7 +376,7 @@ Array. Each field is "key" or "key=value" for parameters for config file
 ###Modules needed:
 
 * puppetlabs-stdlib
-* rodjek-logrotate
+* yo61-logrotate
 * puppetlabs-apt ( only for Debian/Ubuntu )
 
 ###Software versions needed:
