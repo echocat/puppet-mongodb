@@ -1,0 +1,17 @@
+[Unit]
+Description=Mongos_<%= @mongos_instance %> server
+Wants=network.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=<%= scope.lookupvar('mongodb::pidfilepath') %>/mongos_<%= @mongos_instance %>/mongos.pid
+ExecStart=/usr/bin/mongos --config /etc/mongos_<%= @mongos_instance %>.conf
+Restart=on-failure
+User=<%= scope.lookupvar('mongodb::run_as_user') %>
+Group=<%= scope.lookupvar('mongodb::run_as_group') %>
+LimitNOFILE=<%= scope.lookupvar('mongodb::ulimit_nofiles') %>
+LimitNPROC=<%= scope.lookupvar('mongodb::ulimit_nproc') %>
+
+[Install]
+WantedBy=multi-user.target

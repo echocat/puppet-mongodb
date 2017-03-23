@@ -1,6 +1,7 @@
 # == Class: mongodb
 #
 class mongodb (
+  $systemd_os               = $mongodb::params::systemd_os,
   $dbdir                    = $mongodb::params::dbdir,
   $pidfilepath              = $mongodb::params::pidfilepath,
   $logdir                   = $mongodb::params::logdir,
