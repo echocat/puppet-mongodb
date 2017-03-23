@@ -5,7 +5,7 @@ describe 'mongodb::mongod' , :type => :define do
   let(:title) { 'testdb' }
 
   context 'with defaults for all parameters on RedHat' do
-    let(:facts) {{ :osfamily => 'RedHat' }}
+    let(:facts) {{ :osfamily => 'redhat' }}
     let :pre_condition do 
       'include ::mongodb::params'
     end    
@@ -17,7 +17,10 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on Debian' do
-    let(:facts) {{ :osfamily => 'Debian', :lsbdistid => 'ubuntu' }}
+    let(:facts) {{ :osfamily => 'debian', :lsbdistid => 'ubuntu' }}
+    let :pre_condition do
+      'include ::mongodb::params'
+    end
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}

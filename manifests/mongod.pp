@@ -65,7 +65,7 @@ define mongodb::mongod (
       File[
         "/etc/mongod_${mongod_instance}.conf",
         "/etc/init.d/mongod_${mongod_instance}"],
-      Service[$::mongodb::old_servicename]],
+      Service[$::mongodb::params::old_servicename]],
     before     => Anchor['mongodb::end']
   }
 

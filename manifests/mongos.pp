@@ -57,7 +57,7 @@ define mongodb::mongos (
       require    => [
         File["/etc/mongos_${mongos_instance}.conf"],
         File["/etc/init.d/mongos_${mongos_instance}"],
-        Service[$::mongodb::old_servicename],
+        Service[$::mongodb::params::old_servicename],
         Start_detector['configservers']],
       before     => Anchor['mongodb::end']
     }
