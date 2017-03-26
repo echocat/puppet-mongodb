@@ -33,6 +33,9 @@ class mongodb::params {
     'RedHat': {
       $systemd_os = versioncmp($::operatingsystemmajrelease, '7') > 0
     }
+    default: { # deal with lint
+      $systemd_os = false
+    }
   }
 
     # directorypath to store db directory in

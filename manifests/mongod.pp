@@ -18,8 +18,6 @@ define mongodb::mongod (
   $mongod_deactivate_transparent_hugepage = false,
 ) {
 
-# lint:ignore:selector_inside_resource  would not add much to readability
-
   $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
 
   file {
@@ -63,8 +61,6 @@ define mongodb::mongod (
         require => Class['mongodb::install'],
     }
   }
-
-# lint:endignore
 
   if ($mongod_monit != false) {
     # notify { "mongod_monit is : ${mongod_monit}": }

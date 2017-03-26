@@ -13,8 +13,6 @@ define mongodb::mongos (
   $mongos_add_options    = []
 ) {
 
-# lint:ignore:selector_inside_resource  would not add much to readability
-
   $db_specific_dir = "${::mongodb::params::dbdir}/mongos_${mongos_instance}"
 
   file {
