@@ -26,6 +26,18 @@ class mongodb::params {
     }
   }
 
+  case $::osfamily {
+    'Debian': {
+      $systemd_os = versioncmp($::operatingsystemmajrelease, '15.10') > 0
+    }
+    'RedHat': {
+      $systemd_os = versioncmp($::operatingsystemmajrelease, '7') > 0
+    }
+    default: { # deal with lint
+      $systemd_os = false
+    }
+  }
+
     # directorypath to store db directory in
     # subdirectories for each mongo instance will be created
 
