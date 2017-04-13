@@ -84,7 +84,7 @@ define mongodb::mongos (
           "/etc/mongos_${mongos_instance}.conf",
           "mongos_${mongos_instance}_service",
           $db_specific_dir],
-        Service[$::mongodb::params::old_servicename],
+        Service[$::mongodb::old_servicename],
         Start_detector['configservers']],
       before     => Anchor['mongodb::end']
     }
