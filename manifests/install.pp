@@ -11,11 +11,21 @@ class mongodb::install (
 
     if ($repo_manage == true) {
         include $::mongodb::params::repo_class
+        # On Debian, the package name may change when changing repos.
+        case $::osfamily {
+          'Debian': {
+            $mongodb_package_name = $::mongodb::repos::apt::package_name
+          }
+          default: {
+            $mongodb_package_name = $::mongodb::package_name
+          }
+        }
         $mongodb_10gen_package_require = [
           Anchor['mongodb::install::begin'],
           Class[$::mongodb::params::repo_class]
         ]
     } else {
+        $mongodb_package_name = $::mongodb::package_name
         $mongodb_10gen_package_require = [
           Anchor['mongodb::install::begin']
         ]
@@ -37,27 +47,11 @@ class mongodb::install (
         before  => Anchor['mongodb::install::end']
     }
 
-
-  case $::osfamily {
-    'Debian': {
-      package { 'mongodb-package':
-        ensure  => $package_ensure,
-        name    => $::mongodb::repos::apt::package_name,
-        require => $mongodb_10gen_package_require,
-        before  => [Anchor['mongodb::install::end']]
-      }
+    package { 'mongodb-package':
+      ensure  => $package_ensure,
+      name    => $mongodb_package_name,
+      require => $mongodb_10gen_package_require,
+      before  => [Anchor['mongodb::install::end']]
     }
-    'RedHat': {
-      package { 'mongodb-package':
-        ensure  => $package_ensure,
-        name    => $::mongodb::package_name,
-        require => $mongodb_10gen_package_require,
-        before  => [Anchor['mongodb::install::end']]
-      }
-    }
-    default: {
-      fail("Unsupported OS ${::osfamily}")
-    }
-  }
 
 }
