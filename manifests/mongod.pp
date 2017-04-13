@@ -19,6 +19,7 @@ define mongodb::mongod (
 ) {
 
   $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
+  $osfamily_lc = downcase($::osfamily)
 
   file {
     "/etc/mongod_${mongod_instance}.conf":
@@ -56,7 +57,7 @@ define mongodb::mongod (
     $service_provider = 'init'
     file { "mongod_${mongod_instance}_service":
         path    => "/etc/init.d/mongod_${mongod_instance}",
-        content => template("mongodb/init.d/${::osfamily}_mongod.conf.erb"),
+        content => template("mongodb/init.d/${osfamily_lc}_mongod.conf.erb"),
         mode    => '0755',
         require => Class['mongodb::install'],
     }
