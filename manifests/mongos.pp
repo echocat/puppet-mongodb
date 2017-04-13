@@ -45,7 +45,13 @@ define mongodb::mongos (
       ]
     }
   } else {
-    $service_provider = 'init'
+    # Workaround for Ubuntu 14.04
+    if ( versioncmp($::operatingsystemmajrelease, '14.04') == 0 ) {
+      $service_provider = undef # let puppet decide
+    } else {
+      $service_provider = 'init'
+    }
+
     file { "mongos_${mongos_instance}_service":
         path    => "/etc/init.d/mongos_${mongos_instance}",
         content => template("mongodb/init.d/${osfamily_lc}_mongos.conf.erb"),
