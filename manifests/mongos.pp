@@ -14,6 +14,7 @@ define mongodb::mongos (
 ) {
 
   $db_specific_dir = "${::mongodb::params::dbdir}/mongos_${mongos_instance}"
+  $osfamily_lc = downcase($::osfamily)
 
   file {
     "/etc/mongos_${mongos_instance}.conf":
@@ -47,7 +48,7 @@ define mongodb::mongos (
     $service_provider = 'init'
     file { "mongos_${mongos_instance}_service":
         path    => "/etc/init.d/mongos_${mongos_instance}",
-        content => template("mongodb/init.d/${::osfamily}_mongos.conf.erb"),
+        content => template("mongodb/init.d/${osfamily_lc}_mongos.conf.erb"),
         mode    => '0755',
         require => Class['mongodb::install'],
     }
