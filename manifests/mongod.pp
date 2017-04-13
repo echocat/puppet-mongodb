@@ -53,7 +53,13 @@ define mongodb::mongod (
       ]
     }
   } else {
-    $service_provider = 'init'
+    # Workaround for Ubuntu 14.04
+    if ( versioncmp($::operatingsystemmajrelease, '14.04') == 0 ) {
+      $service_provider = undef # let puppet decide
+    } else {
+      $service_provider = 'init'
+    }
+
     file { "mongod_${mongod_instance}_service":
         path    => "/etc/init.d/mongod_${mongod_instance}",
         content => template("mongodb/init.d/${::osfamily}_mongod.conf.erb"),
