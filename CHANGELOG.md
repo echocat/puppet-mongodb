@@ -1,3 +1,9 @@
+## 2017-03-27 - 4.0.0 (Major release)
+
+#### Features:
+
+- add support for systemd
+
 ## 2016-01-18 - 3.5.0 (Feature release)
 
 #### Features:
