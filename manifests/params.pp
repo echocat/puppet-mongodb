@@ -31,7 +31,7 @@ class mongodb::params {
       $systemd_os = versioncmp($::operatingsystemmajrelease, '15.10') > 0
     }
     'RedHat': {
-      $systemd_os = versioncmp($::operatingsystemmajrelease, '7') > 0
+      $systemd_os = versioncmp($::operatingsystemmajrelease, '7') >= 0
     }
     default: { # deal with lint
       $systemd_os = false
