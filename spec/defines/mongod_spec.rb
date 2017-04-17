@@ -5,9 +5,9 @@ describe 'mongodb::mongod' , :type => :define do
   let(:title) { 'testdb' }
 
   context 'with defaults for all parameters on pre-systemd RedHat' do
-    let(:facts) {{ :osfamily => 'redhat', :operatingsystemmajrelease => '6' }}
+    let(:facts) {{ :osfamily => 'redhat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '6', :puppetversion => Puppet.version }}
     let :pre_condition do
-      'include ::mongodb::params'
+      'include ::mongodb'
     end    
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
@@ -17,9 +17,9 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on pre-systemd Debian' do
-    let(:facts) {{ :osfamily => 'debian', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '14.04' }}
+    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '14.04', :lsbdistrelease => '14.04', :puppetversion => Puppet.version }}
     let :pre_condition do
-      'include ::mongodb::params'
+      'include ::mongodb'
     end
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
@@ -29,9 +29,9 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on Debian' do
-    let(:facts) {{ :osfamily => 'debian', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '16.04' }}
+    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '16.04', :lsbdistrelease => '16.04', :puppetversion => Puppet.version }}
     let :pre_condition do
-      'include ::mongodb::params'
+      'include ::mongodb'
     end
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
