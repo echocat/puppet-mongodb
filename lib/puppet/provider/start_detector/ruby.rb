@@ -34,7 +34,13 @@ Puppet::Type.type(:start_detector).provide(:ruby) do
     servers_checked = Hash[servers.map{ |k| [k, false] }]
 
     Integer(resource[:timeout]).times do
-      servers.each do |server|
+      servers.each do |_server|
+        # support MongoDB 3.2+ syntax for configDB
+        rplset, server = _server.split("/")
+        if server.nil?
+          server = _server
+        end
+
         begin
           ip, port = server.split(":")
 
