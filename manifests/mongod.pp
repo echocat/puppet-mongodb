@@ -44,8 +44,17 @@ define mongodb::mongod (
       "/etc/init.d/mongod_${mongod_instance}":
         ensure => absent,
     }
+    file { "mongod_${mongod_instance}_thp":
+      path    => "/etc/systemd/system/mongod_${mongod_instance}_thp.service",
+      content => template('mongodb/systemd/mongod_thp.service.erb'),
+      mode    => '0644',
+      require => [
+        Class['mongodb::install'],
+        File["/etc/init.d/mongod_${mongod_instance}"]
+      ]
+    }
     file { "mongod_${mongod_instance}_service":
-      path    => "/lib/systemd/system/mongod_${mongod_instance}.service",
+      path    => "/etc/systemd/system/mongod_${mongod_instance}.service",
       content => template('mongodb/systemd/mongod.service.erb'),
       mode    => '0644',
       require => [
