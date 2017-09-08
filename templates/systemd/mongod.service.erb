@@ -14,9 +14,9 @@ LimitNOFILE=<%= scope.lookupvar('mongodb::ulimit_nofiles') %>
 LimitNPROC=<%= scope.lookupvar('mongodb::ulimit_nproc') %>
 <% if @mongod_deactivate_transparent_hugepage -%>
 <%# implement mdiag.sh best-practice %>
-ExecPreStart=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/khugepaged/defrag && echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag'
-ExecPreStart=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/defrag && echo never > /sys/kernel/mm/transparent_hugepage/defrag'
-ExecPreStart=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/enabled && echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+ExecStartPre=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/khugepaged/defrag && echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag'
+ExecStartPre=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/defrag && echo never > /sys/kernel/mm/transparent_hugepage/defrag'
+ExecStartPre=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/enabled && echo never > /sys/kernel/mm/transparent_hugepage/enabled'
 <% end -%>
 
 [Install]
