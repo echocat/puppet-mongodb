@@ -31,7 +31,7 @@ class mongodb::params {
       if ($::operatingsystem == "Ubuntu") {
         $systemd_os = versioncmp($::operatingsystemmajrelease, '15.10') > 0
       } else {
-        $systemd_os = versioncmp($::operatingsystemmajrelease, '8') > 0
+        $systemd_os = versioncmp($::operatingsystemmajrelease, '8') >= 0
       }
     }
     'RedHat': {
