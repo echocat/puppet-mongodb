@@ -2,6 +2,7 @@
 # mongod.conf - YAML Syntax
 
 systemLog:
+   destination: file
    path: <%= scope.lookupvar('mongodb::logdir') %>/mongod_<%= @mongod_instance %>.log
    logAppend: <%= @mongod_logappend %>
 
@@ -45,7 +46,10 @@ sharding:
    clusterRole: <%= @mongod_configsvr %>
 <%- end -%>
 
-<%- @mongod_add_options.each do |addoption| -%>
-<%= addoption %>
+<%- if !@mongod_add_options.empty? -%>
+setParameter:
+<%- @mongod_add_options.sort_by {|key, value| key}.each do |key,value| -%>
+  <%= key %>: <%= value %>
+<%- end -%>
 <%- end -%>
 
