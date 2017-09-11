@@ -24,7 +24,7 @@ define mongodb::mongod (
   if ($mongodb::use_yamlconfig) {
     file {
       "/etc/mongod_${mongod_instance}.conf":
-        content => template('mongodb/mongod.conf.erb'),
+        content => template('mongodb/mongod.conf.yaml.erb'),
         mode    => '0755',
         # no auto restart of a db because of a config change
         # notify => Class['mongodb::service'],
@@ -33,7 +33,7 @@ define mongodb::mongod (
   } else {
     file {
       "/etc/mongod_${mongod_instance}.conf":
-        content => template('mongodb/mongod.conf.yaml.erb'),
+        content => template('mongodb/mongod.conf.erb'),
         mode    => '0755',
         # no auto restart of a db because of a config change
         # notify => Class['mongodb::service'],
