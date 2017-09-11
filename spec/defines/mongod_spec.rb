@@ -8,7 +8,7 @@ describe 'mongodb::mongod' , :type => :define do
     let(:facts) {{ :osfamily => 'redhat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '6', :puppetversion => Puppet.version }}
     let :pre_condition do
       'include ::mongodb'
-    end    
+    end
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}
@@ -25,6 +25,13 @@ describe 'mongodb::mongod' , :type => :define do
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}
       it { should contain_file("mongod_testdb_service").with_path("/etc/init.d/mongod_testdb").with_content(/\/sys\/kernel\/mm\/transparent_hugepage\//) }
+    end
+    context 'with mongod_manage_service set to false' do
+      let(:params) {{ :mongod_manage_service => false }}
+      it {  should ! contain_service("mongod_testdb") }
+    end
+    context 'with mongod_manage_service unset' do
+      it {  should contain_service("mongod_testdb") }
     end
   end
 
