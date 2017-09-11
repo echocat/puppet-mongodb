@@ -16,6 +16,7 @@ define mongodb::mongod (
   $mongod_monit                           = false,
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
+  $mongod_manage_service                  = true,
 ) {
 
   $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
@@ -109,19 +110,21 @@ define mongodb::mongod (
     }
   }
 
-  service { "mongod_${mongod_instance}":
-    ensure     => $mongod_running,
-    enable     => $mongod_enable,
-    hasstatus  => true,
-    hasrestart => true,
-    provider   => $service_provider,
-    require    => [
-      File[
-        "/etc/mongod_${mongod_instance}.conf",
-        "mongod_${mongod_instance}_service",
-        $db_specific_dir],
-      Service[$::mongodb::old_servicename]],
-    before     => Anchor['mongodb::end']
+  if $mongod_manage_service {
+    service { "mongod_${mongod_instance}":
+      ensure     => $mongod_running,
+      enable     => $mongod_enable,
+      hasstatus  => true,
+      hasrestart => true,
+      provider   => $service_provider,
+      require    => [
+        File[
+          "/etc/mongod_${mongod_instance}.conf",
+          "mongod_${mongod_instance}_service",
+          $db_specific_dir],
+        Service[$::mongodb::old_servicename]],
+      before     => Anchor['mongodb::end']
+    }
   }
 
 }
