@@ -2,11 +2,24 @@
 #
 class mongodb::params {
 
-  case $::osfamily {
-    if ($mongodb::enterprise) {
-      ## FIXME: only Debian supported at the moment
-      ## put my ugly code here
-    } else {
+  if ($mongodb::enterprise) {
+    ## FIXME: only Debian supported at the moment
+    case $::osfamily {
+      'Debian': {
+        $repo_class          = 'mongodb::repos::apt'
+        $mongodb_pkg_name    = 'mongodb-enterprise'
+        $old_server_pkg_name = 'mongodb-stable'
+        $old_servicename     = 'mongodb'
+        $run_as_user         = 'mongodb'
+        $run_as_group        = 'mongodb'
+        $logdir              = '/var/log/mongodb'
+      }
+      default: {
+        fail("Unsupported OS ${::osfamily}")
+      }
+    }
+  } else {
+    case $::osfamily {
       'Debian': {
         $repo_class          = 'mongodb::repos::apt'
         $mongodb_pkg_name    = 'mongodb-10gen'
