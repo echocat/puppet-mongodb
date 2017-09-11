@@ -28,13 +28,11 @@ storage:
    dbPath: <%= scope.lookupvar('mongodb::dbdir') %>/mongod_<%= @mongod_instance %>
    engine: WiredTiger
 
-## replication
 <%- if @mongod_replSet != "" -%>
 replication:
    replSetName: <%= @mongod_replSet %>
 <%- end -%>
 
-## sharding
 <%- if @mongod_shardsvr != false -%>
 sharding:
    clusterRole: <%= @mongod_shardsvr %>
@@ -44,7 +42,6 @@ sharding:
    clusterRole: <%= @mongod_configsvr %>
 <%- end -%>
 
-## custom options
 <%- @mongod_add_options.each do |addoption| -%>
 <%= addoption %>
 <%- end -%>
