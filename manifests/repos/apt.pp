@@ -1,6 +1,7 @@
 # == class mongodb::repos::apt
 class mongodb::repos::apt (
   $package_ensure = $::mongodb::package_ensure,
+  $use_enterprise = $::mongodb::use_enterprise,
 ) {
 
   # define ordering
@@ -17,7 +18,7 @@ class mongodb::repos::apt (
         $location = 'http://repo.mongodb.org/apt/debian'
         $repos = 'main'
         # FIXME: for the moment only Debian 'Wheezy' is supported
-        if ($mongodb::use_enterprise) {
+        if ($use_enterprise) {
           $release = "${::lsbdistcodename}/mongodb-enterprise/${$mongover[0]}.${$mongover[1]}"
         } else {
           $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
