@@ -17,7 +17,11 @@ class mongodb::repos::apt (
         $location = 'http://repo.mongodb.org/apt/debian'
         $repos = 'main'
         # FIXME: for the moment only Debian 'Wheezy' is supported
-        $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
+        if ($mongodb::use_enterprise) {
+          $release = "${::lsbdistcodename}/mongodb-enterprise/${$mongover[0]}.${$mongover[1]}"
+        } else {
+          $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
+        }
       }
       'Ubuntu': {
         $location = 'http://repo.mongodb.org/apt/ubuntu'

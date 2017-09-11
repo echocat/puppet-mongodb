@@ -21,13 +21,24 @@ define mongodb::mongod (
   $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
   $osfamily_lc = downcase($::osfamily)
 
-  file {
-    "/etc/mongod_${mongod_instance}.conf":
-      content => template('mongodb/mongod.conf.erb'),
-      mode    => '0755',
-      # no auto restart of a db because of a config change
-      # notify => Class['mongodb::service'],
-      require => Class['mongodb::install'];
+  if ($mongodb::use_yamlconfig) {
+    file {
+      "/etc/mongod_${mongod_instance}.conf":
+        content => template('mongodb/mongod.conf.erb'),
+        mode    => '0755',
+        # no auto restart of a db because of a config change
+        # notify => Class['mongodb::service'],
+        require => Class['mongodb::install'];
+    }
+  } else {
+    file {
+      "/etc/mongod_${mongod_instance}.conf":
+        content => template('mongodb/mongod.conf.yaml.erb'),
+        mode    => '0755',
+        # no auto restart of a db because of a config change
+        # notify => Class['mongodb::service'],
+        require => Class['mongodb::install'];
+    }
   }
 
   file {

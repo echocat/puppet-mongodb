@@ -3,26 +3,31 @@
 class mongodb::params {
 
   case $::osfamily {
-    'Debian': {
-      $repo_class          = 'mongodb::repos::apt'
-      $mongodb_pkg_name    = 'mongodb-10gen'
-      $old_server_pkg_name = 'mongodb-stable'
-      $old_servicename     = 'mongodb'
-      $run_as_user         = 'mongodb'
-      $run_as_group        = 'mongodb'
-      $logdir              = '/var/log/mongodb'
-    }
-    'RedHat': {
-      $repo_class          = 'mongodb::repos::yum'
-      $mongodb_pkg_name    = 'mongo-10gen-server'
-      $old_server_pkg_name = 'mongodb-server'
-      $old_servicename     = 'mongod'
-      $run_as_user         = 'mongod'
-      $run_as_group        = 'mongod'
-      $logdir              = '/var/log/mongodb'
-    }
-    default: {
-      fail("Unsupported OS ${::osfamily}")
+    if ($mongodb::enterprise) {
+      ## FIXME: only Debian supported at the moment
+      ## put my ugly code here
+    } else {
+      'Debian': {
+        $repo_class          = 'mongodb::repos::apt'
+        $mongodb_pkg_name    = 'mongodb-10gen'
+        $old_server_pkg_name = 'mongodb-stable'
+        $old_servicename     = 'mongodb'
+        $run_as_user         = 'mongodb'
+        $run_as_group        = 'mongodb'
+        $logdir              = '/var/log/mongodb'
+      }
+      'RedHat': {
+        $repo_class          = 'mongodb::repos::yum'
+        $mongodb_pkg_name    = 'mongo-10gen-server'
+        $old_server_pkg_name = 'mongodb-server'
+        $old_servicename     = 'mongod'
+        $run_as_user         = 'mongod'
+        $run_as_group        = 'mongod'
+        $logdir              = '/var/log/mongodb'
+      }
+      default: {
+        fail("Unsupported OS ${::osfamily}")
+      }
     }
   }
 
