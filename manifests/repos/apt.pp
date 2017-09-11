@@ -15,12 +15,13 @@ class mongodb::repos::apt (
 
     case $::operatingsystem {
       'Debian': {
-        $location = 'http://repo.mongodb.org/apt/debian'
         $repos = 'main'
         # FIXME: for the moment only Debian 'Wheezy' is supported
         if ($use_enterprise) {
+          $location = 'http://repo.mongodb.com/apt/debian'
           $release = "${::lsbdistcodename}/mongodb-enterprise/${$mongover[0]}.${$mongover[1]}"
         } else {
+          $location = 'http://repo.mongodb.org/apt/debian'
           $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
         }
       }
