@@ -3,7 +3,7 @@
 
 systemLog:
    destination: file
-   path: <%= scope.lookupvar('mongodb::logdir') %>/mongod_<%= @mongod_instance %>.log
+   path: <%= scope.lookupvar('mongodb::logdir') %>/mongod_<%= @mongod_instance %>/
    logAppend: <%= @mongod_logappend %>
 
 processManagement:
