@@ -11,7 +11,7 @@ class mongodb::repos::apt (
 
   if (($package_ensure =~ /(\d+\.*)+\d/) and (versioncmp($package_ensure, '3.0.0') >= 0)) {
     $mongover = split($package_ensure, '[.]')
-    $package_name = 'mongodb-org'
+    $package_name = $::mongodb::package_name
 
     case $::operatingsystem {
       'Debian': {
