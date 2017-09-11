@@ -21,7 +21,10 @@ security:
 <%- if @mongod_auth != false -%>
    keyFile: /etc/mongod_<%= @mongod_instance %>.key
    clusterAuthMode: sendKeyFile
-   authorization: <%= @mongod_auth %>
+   authorization: enabled
+<%- end -%>
+<%- if @mongod_auth == false -%>
+   authorization: disabled
 <%- end -%>
 
 storage:
