@@ -6,6 +6,7 @@ Before=mongod_<%= @mongod_instance %>.service
 
 [Service]
 Type=oneshot
+RemainAfterExit=true
 <% if @mongod_deactivate_transparent_hugepage -%>
 <%# implement mdiag.sh best-practice %>
 ExecStartPre=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/khugepaged/defrag && echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag'
