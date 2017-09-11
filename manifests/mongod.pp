@@ -75,8 +75,10 @@ define mongodb::mongod (
       ]
     }
   } else {
-    # Workaround for Ubuntu 14.04
+    # Workaround for Ubuntu 14.04 and Debian 7
     if ( versioncmp($::operatingsystemmajrelease, '14.04') == 0 ) {
+      $service_provider = undef # let puppet decide
+    } elsif ( versioncmp($::operatingsystemmajrelease, '8') < 0 ) {
       $service_provider = undef # let puppet decide
     } else {
       $service_provider = 'init'
