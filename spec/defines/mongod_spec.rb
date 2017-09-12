@@ -17,7 +17,7 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on pre-systemd Debian' do
-    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '14.04', :lsbdistrelease => '14.04', :puppetversion => Puppet.version }}
+    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :lsbdistcodename => 'trusty', :operatingsystemmajrelease => '14.04', :lsbdistrelease => '14.04', :puppetversion => Puppet.version }}
     let :pre_condition do
       'include ::mongodb'
     end
@@ -29,7 +29,7 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on Debian' do
-    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '16.04', :lsbdistrelease => '16.04', :puppetversion => Puppet.version }}
+    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :lsbdistcodename => 'xenial', :operatingsystemmajrelease => '16.04', :lsbdistrelease => '16.04', :puppetversion => Puppet.version }}
     let :pre_condition do
       'include ::mongodb'
     end
