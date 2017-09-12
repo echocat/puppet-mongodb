@@ -22,7 +22,7 @@ class mongodb::repos::apt (
           $release = "${::lsbdistcodename}/mongodb-enterprise/${$mongover[0]}.${$mongover[1]}"
         } else {
           $location = 'http://repo.mongodb.org/apt/debian'
-          $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
+          $release = "${::lsbdistcodename}/mongodb-org/${$mongover[0]}.${$mongover[1]}"
         }
       }
       'Ubuntu': {
