@@ -19,7 +19,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">=2.7.20 <5.0.0"
+      "version_requirement": ">=3.7.0 <5.0.0"
     }
   ],
   "name": "dwerder-mongodb",
@@ -32,7 +32,7 @@
   "issues_url": "https://github.com/echocat/puppet-mongodb/issues",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0"},
-    {"name":"puppetlabs/apt","version_requirement":">= 1.1.0"},
+    {"name":"puppetlabs/apt","version_requirement":">= 2.0.0"},
     {"name":"yo61-logrotate","version_requirement":">= 1.4.0"}
   ]
 }
