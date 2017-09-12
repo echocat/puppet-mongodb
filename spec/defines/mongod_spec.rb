@@ -36,7 +36,7 @@ describe 'mongodb::mongod' , :type => :define do
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}
-      it { should contain_file("mongod_testdb_thp_service").with_path("/etc/systemd/system/mongod_testdb_thp.service").with_content(/\/sys\/kernel\/mm\/transparent_hugepage\//) }
+      it { should contain_file("mongod_testdb_thp").with_path("/etc/systemd/system/mongod_testdb_thp.service").with_content(/\/sys\/kernel\/mm\/transparent_hugepage\//) }
     end
   end
 
