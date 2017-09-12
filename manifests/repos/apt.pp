@@ -46,16 +46,11 @@ class mongodb::repos::apt (
   }
 
   apt::source{ 'mongodb-source':
-    location => $location,
-    release  => $release,
-    repos    => $repos,
-    key      => {
-      'id'     => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
-      'server' => 'keyserver.ubuntu.com',
-    },
-    include  => {
-      'src' => false,
-      'deb' => true,
-    }
+    location    => $location,
+    release     => $release,
+    repos       => $repos,
+    key         => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
+    key_server  => 'keyserver.ubuntu.com',
+    include_src => false,
   }
 }
