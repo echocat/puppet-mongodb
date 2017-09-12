@@ -2,7 +2,10 @@
 #
 class mongodb::params {
 
-  if ($mongodb::enterprise) {
+  $use_enterprise = false,
+  $use_yamlconfig = false,
+
+  if ($mongodb::use_enterprise) {
     ## FIXME: only Debian supported at the moment
     case $::osfamily {
       'Debian': {
