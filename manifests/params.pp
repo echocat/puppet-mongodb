@@ -2,8 +2,8 @@
 #
 class mongodb::params {
 
-  $use_enterprise = false,
-  $use_yamlconfig = false,
+  $use_enterprise = false
+  $use_yamlconfig = false
 
   if ($mongodb::use_enterprise) {
     ## FIXME: only Debian supported at the moment
