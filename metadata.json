@@ -32,7 +32,7 @@
   "issues_url": "https://github.com/echocat/puppet-mongodb/issues",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0"},
-    {"name":"puppetlabs/apt","version_requirement":"<4.0.0"},
+    {"name":"puppetlabs/apt","version_requirement":">=2.0.0 <4.0.0"},
     {"name":"yo61-logrotate","version_requirement":">= 1.4.0"}
   ]
 }
