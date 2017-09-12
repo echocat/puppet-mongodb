@@ -53,9 +53,5 @@ class mongodb::repos::apt (
       'id'     => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
       'server' => 'keyserver.ubuntu.com',
     },
-    include  => {
-      'src' => false,
-      'deb' => true,
-    }
   }
 }
