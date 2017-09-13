@@ -46,8 +46,10 @@ sharding:
    clusterRole: <%= @mongod_configsvr %>
 <%- end -%>
 
+<%- if !@mongod_add_options.empty? -%>
 setParameter:
 <%- @mongod_add_options.sort_by{|key, value| key}.each do |key,value| -%>
   <%= key %>: <%= value %>
+<%- end -%>
 <%- end -%>
 
