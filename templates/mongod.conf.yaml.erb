@@ -47,7 +47,7 @@ sharding:
 <%- end -%>
 
 setParameter:
-<%- @mongod_add_options.sort_by {|key, value| key}.each do |key,value| -%>
+<%- @mongod_add_options.sort_by{|key, value| key}.each do |key,value| -%>
   <%= key %>: <%= value %>
 <%- end -%>
 
