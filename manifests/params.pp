@@ -2,7 +2,10 @@
 #
 class mongodb::params {
 
-  if ($mongodb::enterprise) {
+  $use_enterprise = false
+  $use_yamlconfig = false
+
+  if ($use_enterprise) {
     ## FIXME: only Debian supported at the moment
     case $::osfamily {
       'Debian': {
@@ -46,7 +49,7 @@ class mongodb::params {
 
   case $::osfamily {
     'Debian': {
-      if ($::operatingsystem == "Ubuntu") {
+      if ($::operatingsystem == 'Ubuntu') {
         $systemd_os = versioncmp($::operatingsystemmajrelease, '15.10') > 0
       } else {
         $systemd_os = versioncmp($::operatingsystemmajrelease, '8') >= 0

@@ -8,7 +8,7 @@ describe 'mongodb::mongod' , :type => :define do
     let(:facts) {{ :osfamily => 'redhat', :operatingsystem => 'RedHat', :operatingsystemmajrelease => '6', :puppetversion => Puppet.version }}
     let :pre_condition do
       'include ::mongodb'
-    end    
+    end
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}
@@ -17,7 +17,7 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on pre-systemd Debian' do
-    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '14.04', :lsbdistrelease => '14.04', :puppetversion => Puppet.version }}
+    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :lsbdistcodename => 'trusty', :operatingsystemmajrelease => '14.04', :lsbdistrelease => '14.04', :puppetversion => Puppet.version }}
     let :pre_condition do
       'include ::mongodb'
     end
@@ -29,14 +29,14 @@ describe 'mongodb::mongod' , :type => :define do
   end
 
   context 'with defaults for all parameters on Debian' do
-    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :operatingsystemmajrelease => '16.04', :lsbdistrelease => '16.04', :puppetversion => Puppet.version }}
+    let(:facts) {{ :osfamily => 'debian', :operatingsystem => 'Ubuntu', :lsbdistid => 'ubuntu', :lsbdistcodename => 'xenial', :operatingsystemmajrelease => '16.04', :lsbdistrelease => '16.04', :puppetversion => Puppet.version }}
     let :pre_condition do
       'include ::mongodb'
     end
     it { should contain_mongodb__mongod('testdb') }
     context 'with deactivate_transparent_hugepage set' do
       let(:params) {{ :mongod_deactivate_transparent_hugepage => true }}
-      it { should contain_file("mongod_testdb_service").with_path("/lib/systemd/system/mongod_testdb.service").with_content(/\/sys\/kernel\/mm\/transparent_hugepage\//) }
+      it { should contain_file("mongod_testdb_thp").with_path("/etc/systemd/system/mongod_testdb_thp.service").with_content(/\/sys\/kernel\/mm\/transparent_hugepage\//) }
     end
   end
 

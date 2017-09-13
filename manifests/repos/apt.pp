@@ -22,7 +22,7 @@ class mongodb::repos::apt (
           $release = "${::lsbdistcodename}/mongodb-enterprise/${$mongover[0]}.${$mongover[1]}"
         } else {
           $location = 'http://repo.mongodb.org/apt/debian'
-          $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
+          $release = "${::lsbdistcodename}/mongodb-org/${$mongover[0]}.${$mongover[1]}"
         }
       }
       'Ubuntu': {
@@ -46,11 +46,12 @@ class mongodb::repos::apt (
   }
 
   apt::source{ 'mongodb-source':
-    location    => $location,
-    release     => $release,
-    repos       => $repos,
-    key         => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
-    key_server  => 'keyserver.ubuntu.com',
-    include_src => false,
+    location => $location,
+    release  => $release,
+    repos    => $repos,
+    key      => {
+      'id'     => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
+      'server' => 'keyserver.ubuntu.com',
+    },
   }
 }
