@@ -2,6 +2,7 @@
 Description=Mongos_<%= @mongod_instance %> server
 Wants=network.target
 After=network.target
+Requires=mongod_<%= @mongod_instance %>_thp.service
 
 [Service]
 Type=forking
@@ -12,12 +13,6 @@ User=<%= scope.lookupvar('mongodb::run_as_user') %>
 Group=<%= scope.lookupvar('mongodb::run_as_group') %>
 LimitNOFILE=<%= scope.lookupvar('mongodb::ulimit_nofiles') %>
 LimitNPROC=<%= scope.lookupvar('mongodb::ulimit_nproc') %>
-<% if @mongod_deactivate_transparent_hugepage -%>
-<%# implement mdiag.sh best-practice %>
-ExecPreStart=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/khugepaged/defrag && echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag'
-ExecPreStart=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/defrag && echo never > /sys/kernel/mm/transparent_hugepage/defrag'
-ExecPreStart=/bin/bash -c 'test -f /sys/kernel/mm/transparent_hugepage/enabled && echo never > /sys/kernel/mm/transparent_hugepage/enabled'
-<% end -%>
 
 [Install]
 WantedBy=multi-user.target

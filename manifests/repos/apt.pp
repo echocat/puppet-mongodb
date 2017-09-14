@@ -1,6 +1,7 @@
 # == class mongodb::repos::apt
 class mongodb::repos::apt (
   $package_ensure = $::mongodb::package_ensure,
+  $use_enterprise = $::mongodb::use_enterprise,
 ) {
 
   # define ordering
@@ -10,14 +11,19 @@ class mongodb::repos::apt (
 
   if (($package_ensure =~ /(\d+\.*)+\d/) and (versioncmp($package_ensure, '3.0.0') >= 0)) {
     $mongover = split($package_ensure, '[.]')
-    $package_name = 'mongodb-org'
+    $package_name = $::mongodb::package_name
 
     case $::operatingsystem {
       'Debian': {
-        $location = 'http://repo.mongodb.org/apt/debian'
         $repos = 'main'
         # FIXME: for the moment only Debian 'Wheezy' is supported
-        $release = "wheezy/mongodb-org/${$mongover[0]}.${$mongover[1]}"
+        if ($use_enterprise) {
+          $location = 'http://repo.mongodb.com/apt/debian'
+          $release = "${::lsbdistcodename}/mongodb-enterprise/${$mongover[0]}.${$mongover[1]}"
+        } else {
+          $location = 'http://repo.mongodb.org/apt/debian'
+          $release = "${::lsbdistcodename}/mongodb-org/${$mongover[0]}.${$mongover[1]}"
+        }
       }
       'Ubuntu': {
         $location = 'http://repo.mongodb.org/apt/ubuntu'
@@ -40,11 +46,12 @@ class mongodb::repos::apt (
   }
 
   apt::source{ 'mongodb-source':
-    location    => $location,
-    release     => $release,
-    repos       => $repos,
-    key         => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
-    key_server  => 'keyserver.ubuntu.com',
-    include_src => false,
+    location => $location,
+    release  => $release,
+    repos    => $repos,
+    key      => {
+      'id'     => '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10',
+      'server' => 'keyserver.ubuntu.com',
+    },
   }
 }

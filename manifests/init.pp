@@ -14,7 +14,9 @@ class mongodb (
   $ulimit_nproc             = $mongodb::params::ulimit_nproc,
   $run_as_user              = $mongodb::params::run_as_user,
   $run_as_group             = $mongodb::params::run_as_group,
-  $old_servicename          = $mongodb::params::old_servicename
+  $old_servicename          = $mongodb::params::old_servicename,
+  $use_yamlconfig           = $mongodb::params::use_yamlconfig,
+  $use_enterprise           = $mongodb::params::use_enterprise,
 ) inherits mongodb::params {
 
   anchor { 'mongodb::begin': before => Anchor['mongodb::install::begin'], }

@@ -21,13 +21,24 @@ define mongodb::mongod (
   $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
   $osfamily_lc = downcase($::osfamily)
 
-  file {
-    "/etc/mongod_${mongod_instance}.conf":
-      content => template('mongodb/mongod.conf.erb'),
-      mode    => '0755',
-      # no auto restart of a db because of a config change
-      # notify => Class['mongodb::service'],
-      require => Class['mongodb::install'];
+  if ($mongodb::use_yamlconfig) {
+    file {
+      "/etc/mongod_${mongod_instance}.conf":
+        content => template('mongodb/mongod.conf.yaml.erb'),
+        mode    => '0755',
+        # no auto restart of a db because of a config change
+        # notify => Class['mongodb::service'],
+        require => Class['mongodb::install'];
+    }
+  } else {
+    file {
+      "/etc/mongod_${mongod_instance}.conf":
+        content => template('mongodb/mongod.conf.erb'),
+        mode    => '0755',
+        # no auto restart of a db because of a config change
+        # notify => Class['mongodb::service'],
+        require => Class['mongodb::install'];
+    }
   }
 
   file {
@@ -44,8 +55,17 @@ define mongodb::mongod (
       "/etc/init.d/mongod_${mongod_instance}":
         ensure => absent,
     }
+    file { "mongod_${mongod_instance}_thp":
+      path    => "/etc/systemd/system/mongod_${mongod_instance}_thp.service",
+      content => template('mongodb/systemd/mongod_thp.service.erb'),
+      mode    => '0644',
+      require => [
+        Class['mongodb::install'],
+        File["/etc/init.d/mongod_${mongod_instance}"]
+      ]
+    }
     file { "mongod_${mongod_instance}_service":
-      path    => "/lib/systemd/system/mongod_${mongod_instance}.service",
+      path    => "/etc/systemd/system/mongod_${mongod_instance}.service",
       content => template('mongodb/systemd/mongod.service.erb'),
       mode    => '0644',
       require => [
@@ -54,8 +74,10 @@ define mongodb::mongod (
       ]
     }
   } else {
-    # Workaround for Ubuntu 14.04
+    # Workaround for Ubuntu 14.04 and Debian 7
     if ( versioncmp($::operatingsystemmajrelease, '14.04') == 0 ) {
+      $service_provider = undef # let puppet decide
+    } elsif ( versioncmp($::operatingsystemmajrelease, '8') < 0 ) {
       $service_provider = undef # let puppet decide
     } else {
       $service_provider = 'init'
