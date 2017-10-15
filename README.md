@@ -316,6 +316,10 @@ Enable/Disable auth true/false (default: false)
 
 Keyfile contents. Your random string/false (default: false)
 
+#####`mongod_engine`
+
+Select the database engine (default: wiredTiger)
+
 #####`mongod_monit`
 
 Use monit monitoring for mongod instances (default: false)
