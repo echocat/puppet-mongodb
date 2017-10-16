@@ -30,7 +30,7 @@ security:
 
 storage:
    dbPath: <%= scope.lookupvar('mongodb::dbdir') %>/mongod_<%= @mongod_instance %>
-   engine: wiredTiger
+   engine: <%= @mongod_engine %>
 
 <%- if @mongod_replSet != "" -%>
 replication:

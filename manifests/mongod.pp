@@ -13,6 +13,7 @@ define mongodb::mongod (
   $mongod_fork                            = true,
   $mongod_auth                            = false,
   $mongod_useauth                         = false,
+  $mongod_engine                          = 'wiredTiger',
   $mongod_monit                           = false,
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
