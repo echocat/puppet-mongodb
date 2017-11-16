@@ -46,6 +46,16 @@ sharding:
    clusterRole: <%= @mongod_configsvr %>
 <%- end -%>
 
+<%- if @mongod_operation_profiling_slowms != "" or @mongod_operation_profiling_mode != "" -%>
+operationProfiling:
+<%- if @mongod_operation_profiling_slowms != "" -%>
+   slowOpThresholdMs: <%= @mongod_operation_profiling_slowms %>
+<%- end -%>
+<%- if @mongod_operation_profiling_mode != "" -%>
+   mode: <%= @mongod_operation_profiling_mode %>
+<%- end -%>
+<%- end -%>
+
 <%- if !@mongod_add_options.empty? -%>
 setParameter:
 <%- @mongod_add_options.sort_by{|key, value| key}.each do |key,value| -%>
