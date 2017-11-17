@@ -10,7 +10,8 @@ define mongodb::mongos (
   $mongos_logappend      = true,
   $mongos_fork           = true,
   $mongos_useauth        = false,
-  $mongos_add_options    = []
+  $mongos_add_options    = [],
+  $mongos_start_detector = true
 ) {
 
   $db_specific_dir = "${::mongodb::params::dbdir}/mongos_${mongos_instance}"
@@ -61,12 +62,13 @@ define mongodb::mongos (
   }
 
   # wait for servers starting
-
-  start_detector { 'configservers':
-    ensure  => present,
-    timeout => 120,
-    servers => $mongos_configServers,
-    policy  => one
+  if $mongos_start_detector {
+    start_detector { 'configservers':
+      ensure  => present,
+      timeout => 120,
+      servers => $mongos_configServers,
+      policy  => one
+    }
   }
 
   if ($mongos_useauth != false) {
