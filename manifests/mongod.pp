@@ -15,6 +15,8 @@ define mongodb::mongod (
   $mongod_useauth                         = false,
   $mongod_engine                          = 'wiredTiger',
   $mongod_monit                           = false,
+  $mongod_operation_profiling_slowms      = '',
+  $mongod_operation_profiling_mode        = '',
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
 ) {
