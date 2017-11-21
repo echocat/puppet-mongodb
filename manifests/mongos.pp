@@ -67,7 +67,8 @@ define mongodb::mongos (
       ensure  => present,
       timeout => 120,
       servers => $mongos_configServers,
-      policy  => one
+      policy  => one,
+      before  => Service["mongos_${mongos_instance}"]
     }
   }
 
@@ -93,8 +94,7 @@ define mongodb::mongos (
           "/etc/mongos_${mongos_instance}.conf",
           "mongos_${mongos_instance}_service",
           $db_specific_dir],
-        Service[$::mongodb::old_servicename],
-        Start_detector['configservers']],
+        Service[$::mongodb::old_servicename]],
       before     => Anchor['mongodb::end']
     }
   }
