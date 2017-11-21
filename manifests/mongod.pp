@@ -5,6 +5,7 @@ define mongodb::mongod (
   $mongod_port                            = 27017,
   $mongod_replSet                         = '',
   $mongod_enable                          = true,
+  $mongod_restart_on_change               = false,
   $mongod_running                         = true,
   $mongod_configsvr                       = false,
   $mongod_shardsvr                        = false,
@@ -24,13 +25,18 @@ define mongodb::mongod (
   $db_specific_dir = "${::mongodb::params::dbdir}/mongod_${mongod_instance}"
   $osfamily_lc = downcase($::osfamily)
 
+  if $mongod_restart_on_change {
+    $notify = Service["mongod_${mongod_instance}"]
+  } else {
+    $notify = undef
+  }
+
   if ($mongodb::use_yamlconfig) {
     file {
       "/etc/mongod_${mongod_instance}.conf":
         content => template('mongodb/mongod.conf.yaml.erb'),
         mode    => '0755',
-        # no auto restart of a db because of a config change
-        # notify => Class['mongodb::service'],
+        notify  => $notify,
         require => Class['mongodb::install'];
     }
   } else {
@@ -38,8 +44,7 @@ define mongodb::mongod (
       "/etc/mongod_${mongod_instance}.conf":
         content => template('mongodb/mongod.conf.erb'),
         mode    => '0755',
-        # no auto restart of a db because of a config change
-        # notify => Class['mongodb::service'],
+        notify  => $notify,
         require => Class['mongodb::install'];
     }
   }
@@ -49,6 +54,7 @@ define mongodb::mongod (
       ensure  => directory,
       owner   => $::mongodb::params::run_as_user,
       group   => $::mongodb::params::run_as_group,
+      notify  => $notify,
       require => Class['mongodb::install'],
   }
 
