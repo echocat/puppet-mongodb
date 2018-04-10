@@ -19,11 +19,11 @@ class mongodb::logrotate {
     create_mode   => '0640',
     create_owner  => $::mongodb::run_as_user,
     create_group  => $::mongodb::run_as_group,
+    maxage        => 14,
     missingok     => true,
     ifempty       => false,
     postrotate    => "  killall -SIGUSR1 mongod > /dev/null 2>&1 || true
-      killall -SIGUSR1 mongos > /dev/null 2>&1 || true
-      find ${::mongodb::logdir} -type f -regex '.*\\.\\(log.[0-9].*-[0-9].*\\)' -exec rm {} \\;",
+      killall -SIGUSR1 mongos > /dev/null 2>&1 || true",
     require       => [Class['mongodb::install'], Class['mongodb::params']],
     before        => Anchor['mongodb::logrotate::end']
   }
