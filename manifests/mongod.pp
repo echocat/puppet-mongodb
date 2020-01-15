@@ -14,6 +14,7 @@ define mongodb::mongod (
   $mongod_auth                            = false,
   $mongod_useauth                         = false,
   $mongod_monit                           = false,
+  $mongod_http                            = false,
   $mongod_add_options                     = [],
   $mongod_deactivate_transparent_hugepage = false,
 ) {
