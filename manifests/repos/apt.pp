@@ -40,7 +40,7 @@ class mongodb::repos::apt (
       default  => 'http://downloads-distro.mongodb.org/repo/debian-sysvinit',
     }
 
-    $package_name = 'mongodb-10gen'
+    $package_name = 'mongodb-org'
     $release = 'dist'
     $repos = '10gen'
   }

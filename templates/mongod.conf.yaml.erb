@@ -32,7 +32,7 @@ security:
 
 storage:
    dbPath: <%= scope.lookupvar('mongodb::dbdir') %>/mongod_<%= @mongod_instance %>
-   engine: wiredTiger
+   engine: <%= @mongod_engine %>
 
 <%- if @mongod_replSet != "" -%>
 replication:
@@ -46,6 +46,16 @@ sharding:
 <%- if @mongod_configsvr != false -%>
 sharding:
    clusterRole: <%= @mongod_configsvr %>
+<%- end -%>
+
+<%- if @mongod_operation_profiling_slowms != "" or @mongod_operation_profiling_mode != "" -%>
+operationProfiling:
+<%- if @mongod_operation_profiling_slowms != "" -%>
+   slowOpThresholdMs: <%= @mongod_operation_profiling_slowms %>
+<%- end -%>
+<%- if @mongod_operation_profiling_mode != "" -%>
+   mode: <%= @mongod_operation_profiling_mode %>
+<%- end -%>
 <%- end -%>
 
 <%- if !@mongod_add_options.empty? -%>

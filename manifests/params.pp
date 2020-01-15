@@ -25,7 +25,7 @@ class mongodb::params {
     case $::osfamily {
       'Debian': {
         $repo_class          = 'mongodb::repos::apt'
-        $mongodb_pkg_name    = 'mongodb-10gen'
+        $mongodb_pkg_name    = 'mongodb-org'
         $old_server_pkg_name = 'mongodb-stable'
         $old_servicename     = 'mongodb'
         $run_as_user         = 'mongodb'
@@ -34,7 +34,7 @@ class mongodb::params {
       }
       'RedHat': {
         $repo_class          = 'mongodb::repos::yum'
-        $mongodb_pkg_name    = 'mongo-10gen-server'
+        $mongodb_pkg_name    = 'mongo-org-server'
         $old_server_pkg_name = 'mongodb-server'
         $old_servicename     = 'mongod'
         $run_as_user         = 'mongod'

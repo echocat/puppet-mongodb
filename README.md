@@ -1,6 +1,6 @@
-#mongodb
+# mongodb
 
-####Table of Contents
+#### Table of Contents
 
 1. [Overview - What is the mongodb module?](#overview)
 2. [Module Description - What does this module do?](#module-description)
@@ -19,7 +19,7 @@
 6. [Limitations - OS compatibility, etc.](#limitations)
 7. [Contributing to the mongodb module](#contributing)
 
-##Overview
+## Overview
 
 This module installs and makes basic configs for mongodb. That includes mongod and mongos.
 Out-of-the-box the defaults are set to install a mongodb version 2.4.x. If you want to use
@@ -27,12 +27,12 @@ Out-of-the-box the defaults are set to install a mongodb version 2.4.x. If you w
 
 Github Master: [![Build Status](https://secure.travis-ci.org/echocat/puppet-mongodb.png?branch=master)](https://travis-ci.org/echocat/puppet-mongodb)
 
-##Module Description
+## Module Description
 
 [MongoDB](http://www.mongodb.org/), is an open-source document database, and the leading NoSQL database.
 This module can be used to set up a simple standalone DB or all components for a full sharding cluster.
 
-##Setup
+## Setup
 
 **What mongodb affects:**
 
@@ -42,7 +42,7 @@ This module can be used to set up a simple standalone DB or all components for a
 
 * internal configuration of your MongoDB cluster, like Sharding Members and so on
 
-###Beginning with MongoDB
+### Beginning with MongoDB
 
 Starting with a mongodb server with replSet. This will install a 2.4.x version MongoDB:
 
@@ -56,7 +56,7 @@ Starting with a mongodb server with replSet. This will install a 2.4.x version M
   }
 ```
 
-###Install MongoDB version 2.6
+### Install MongoDB version 2.6
 
 ```puppet
   class { 'mongodb':
@@ -73,7 +73,7 @@ Starting with a mongodb server with replSet. This will install a 2.4.x version M
   }
 ```
 
-###Install exact version
+### Install exact version
 
 Holy shit, I work in an enterprise environment. I need an specific version.
 So on a RHEL like system it would look like this:
@@ -96,7 +96,7 @@ So on a RHEL like system it would look like this:
   }  
 ```
 
-###Configure MongoDB with run as user
+### Configure MongoDB with run as user
 
 Now we change the run as user and logdir path.
 
@@ -114,7 +114,7 @@ Now we change the run as user and logdir path.
 }
 ```
 
-###Configuration mongodb cluster
+### Configuration mongodb cluster
 
 And here is a more complex example of building a mongo sharding cluster
 4 nodes (3 of them config server) with 4 shards in replication.
@@ -188,14 +188,14 @@ node 'mongo1.my.domain',
 node 'mongo4.my.domain' inherits mongo_sharding_default { }
 ```
 
-##Usage
+## Usage
 
-###Classes and Defined Types
+### Classes and Defined Types
 
 This module installs mongodb from the repo with class `mongodb`.
 The redis service(s) are configured with the defined type `redis::server`.
 
-####Class: `mongodb`
+#### Class: `mongodb`
 
 This class installs mongodb packages and makes basic install configurations.
 It does not configure any mongo services. This is done by defined type
@@ -206,187 +206,191 @@ But you can also set them, when including class mongodb.
 
 **Parameters within `mongodb`:**
 
-#####`dbdir`
+##### `dbdir`
 
 Default is '/var/lib' (string). This is the root directory where the mongo instances
 will create their own subdirectories.
 
-#####`pidfilepath`
+##### `pidfilepath`
 
 Default is `dbdir`.
 
-#####`logdir`
+##### `logdir`
 
 Default on Redhat '/var/log/mongo' and on Debian '/var/log/mongodb'.
 
-#####`logrotatenumber`
+##### `logrotatenumber`
 
 Number of days to keep the logfiles.
 
-#####`package_ensure`
+##### `package_ensure`
 
 Default is 'installed' . Here you can choose the version to be installed.
 
-#####`repo_manage`
+##### `repo_manage`
 
 Default is true (boolean). Choose if this module should manage the repos needed
 to install the mongodb packages.
 
-#####`ulimit_nofiles`
+##### `ulimit_nofiles`
 
 Default is 64000 (integer). Number of allowed filehandles.
 See [recommendations](https://docs.mongodb.com/manual/reference/ulimit/#recommended-ulimit-settings)
 
-#####`ulimit_nproc`
+##### `ulimit_nproc`
 
 Default is 64000 (integer).
 See [recommendations](https://docs.mongodb.com/manual/reference/ulimit/#recommended-ulimit-settings)
 
-#####`run_as_user`
+##### `run_as_user`
 
 Default on Redhat is 'mongod' and on Debian 'mongodb' (string). The user the
 mongod is run with.
 
-#####`run_as_group`
+##### `run_as_group`
 
 Default on Redhat is 'mongod' and on Debian 'mongodb' (string). The group the
 mongod is run with.
 
-#####`old_servicename`
+##### `old_servicename`
 
 Default on Redhat is 'mongod' and on Debian 'mongodb' (string).
 Name of the origin mongodb package service. his will be deactivated.
 
-####Defined Type: `mongodb::mongod`
+#### Defined Type: `mongodb::mongod`
 
 Used to configure mongoD instances. You can setup multiple mongodb servers on the
 same node. See the setup examples.
 
 **Parameters within `mongodb::mongod`
 
-#####`mongod_instance`
+##### `mongod_instance`
 
 Despription of mongd service (shard1, config, etc)  (required)
 
-#####`mongod_bind_ip`
+##### `mongod_bind_ip`
 
 Default is '' (empty string). So listen in all.
 
-#####`mongod_port`
+##### `mongod_port`
 
 Listen port (defaul: 27017)
 
-#####`mongod_replSet`
+##### `mongod_replSet`
 
 Name of ReplSet (optional)
 
-#####`mongod_enable`
+##### `mongod_enable`
 
 Enable/Disable service at boot (default: true)
 
-#####`mongod_running`
+##### `mongod_running`
 
 Start/Stop service (default: true)
 
-#####`mongod_configsvr`
+##### `mongod_configsvr`
 
 Is config server true/false (default: false)
 
-#####`mongod_shardsvr`
+##### `mongod_shardsvr`
 
 Is shard server true/false (default: false)
 
-#####`mongod_logappend`
+##### `mongod_logappend`
 
 Enable/Disable log file appending (default: true)
 
-#####`mongod_rest`
+##### `mongod_rest`
 
 Enable/Disable REST api (default: true)
 
-#####`mongod_fork`
+##### `mongod_fork`
 
 Enable/Disable fork of mongod process (default: true)
 
-#####`mongod_auth`
+##### `mongod_auth`
 
 Enable/Disable auth true/false (default: false)
 
-#####`mongod_useauth`
+##### `mongod_useauth`
 
 Keyfile contents. Your random string/false (default: false)
 
-#####`mongod_monit`
+##### `mongod_engine`
+
+Select the database engine (default: wiredTiger)
+
+##### `mongod_monit`
 
 Use monit monitoring for mongod instances (default: false)
 
-#####`mongod_add_options`
+##### `mongod_add_options`
 
 Array. Each field is "key" or "key=value" for parameters for config file
 
-####Defined Type: `mongodb::mongos`
+#### Defined Type: `mongodb::mongos`
 
 Used to configure mongoS instances. You can setup multiple mongodb proxy
 servers on the same node. See the setup examples.
 
 **Parameters within `mongodb::mongos`
 
-#####`mongos_instance`
+##### `mongos_instance`
 
 Despription of mongd service (shard1, config, etc)  (required)
 
-#####`mongos_bind_ip`
+##### `mongos_bind_ip`
 
 Listen ip (defaul: emtpy, so listen in all)
 
-#####`mongos_port`
+##### `mongos_port`
 
 Listen port (defaul: 27017)
 
-#####`mongos_configServers`
+##### `mongos_configServers`
 
 String with comma seperated list of config servers (optional)
 
-#####`mongos_enable`
+##### `mongos_enable`
 
 Enable/Disable service at boot (default: true)
 
-#####`mongos_running`
+##### `mongos_running`
 
 Start/Stop service (default: true)
 
-#####`mongos_logappend`
+##### `mongos_logappend`
 
 Enable/Disable log file appending (default: true)
 
-#####`mongos_fork`
+##### `mongos_fork`
 
 Enable/Disable fork of mongod process (default: true)
 
-#####`mongos_useauth`
+##### `mongos_useauth`
 
 Keyfile contents. Your random string/false (default: false)
 
-#####`mongos_add_options`
+##### `mongos_add_options`
 
 Array. Each field is "key" or "key=value" for parameters for config file
 
-##Requirements
+## Requirements
 
-###Modules needed:
+### Modules needed:
 
 * puppetlabs-stdlib
 * yo61-logrotate
 * puppetlabs-apt ( only for Debian/Ubuntu )
 
-###Software versions needed:
+### Software versions needed:
 
 * facter > 1.6.2
 * puppet > 2.6.2
 
 On Redhat distributions you need the EPEL or RPMforge repository, because Graphite needs packages, which are not part of the default repos.
 
-##Limitations
+## Limitations
 
 This module is tested on CentOS 6.5 and should also run without problems on
 
@@ -394,6 +398,6 @@ This module is tested on CentOS 6.5 and should also run without problems on
 * Debian 6+
 * Ubunutu 10.04 and newer
 
-##Contributing
+## Contributing
 
 Echocat modules are open projects. So if you want to make this module even better, you can contribute to this module on [Github](https://github.com/echocat/puppet-mongodb).
