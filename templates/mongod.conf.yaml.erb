@@ -15,8 +15,10 @@ net:
 <%- if @mongod_bind_ip != "" -%>
    bindIp: <%= @mongod_bind_ip %>
 <%- end -%>
+<%- if @mongod_http != false -%>
    http:
       RESTInterfaceEnabled: <%= @mongod_rest %>
+<%- end -%>
 
 security:
 <%- if @mongod_auth != false -%>
